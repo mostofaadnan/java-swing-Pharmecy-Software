@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="144" pageHeight="573" columnWidth="144" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="f913d8f7-8b1b-46e9-b5e4-95dd96f41afd">
+	<property name="ireport.zoom" value="3.138428376721004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="240"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#5F9EA0">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFFDFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F8F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFBFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F8F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFBFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<subDataset name="returntbl" uuid="bff2bcb8-98a0-43fa-b1e9-c63510cc884d">
+		<parameter name="returnno" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[Select 
+itemformat as 'Item',qty,Cast(unitrate as decimal(10,2)) as 'UnitRate',Cast(totalamount as decimal(10,2)) as 'totalamount',
+(select Cast(TotalAmount as decimal(10,2)) from salereturn sr where sr.ReturnNo=$P{returnno}) as 'stotalamount',
+(select Cast(TotalVat as decimal(10,2)) from salereturn sr where sr.ReturnNo=$P{returnno}) as 'svat',
+(select Cast(Totalinvoice as decimal(10,2)) from salereturn sr where sr.ReturnNo=$P{returnno}) as 'sinvoice',
+(select Cast(returnacash as decimal(10,2)) from salereturn sr where sr.ReturnNo=$P{returnno}) as 'returncash'
+from salereturndetails sd where sd.returnNo=$P{returnno}]]>
+		</queryString>
+		<field name="Item" class="java.lang.String"/>
+		<field name="qty" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="UnitRate" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="totalamount" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="stotalamount" class="java.math.BigDecimal"/>
+		<field name="svat" class="java.math.BigDecimal"/>
+		<field name="sinvoice" class="java.math.BigDecimal"/>
+		<field name="returncash" class="java.math.BigDecimal"/>
+	</subDataset>
+	<parameter name="returnno" class="java.lang.String"/>
+	<parameter name="cashier" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     salereturn.`id` AS salereturn_id,
+     salereturn.`ReturnNo` AS salereturn_ReturnNo,
+     salereturn.`invoiceNo` AS salereturn_invoiceNo,
+     salereturn.`invoicetype` AS salereturn_invoicetype,
+DATE_FORMAT(salereturn.returndate,'%d-%m-%Y') AS salereturn_returndate,
+     salereturn.`TotalAmount` AS salereturn_TotalAmount,
+     salereturn.`TotalVat` AS salereturn_TotalVat,
+     salereturn.`Totalinvoice` AS salereturn_Totalinvoice,
+     salereturn.`returnacash` AS salereturn_returnacash,
+     salereturn.`prevdue` AS salereturn_prevdue,
+     salereturn.`customerid` AS salereturn_customerid,
+     recieptmsg.`id` AS recieptmsg_id,
+     recieptmsg.`returnmsg` AS recieptmsg_returnmsg,
+     customerinfo.`customername` AS customerinfo_customername,
+     reportdesign.`picture` AS reportdesign_picture,
+     reportdesign.`headeraddress` AS reportdesign_headeraddress,
+     reportdesign.`contact` AS reportdesign_contact
+FROM
+     `customerinfo` customerinfo INNER JOIN `salereturn` salereturn ON customerinfo.`customerid` = salereturn.`customerid`,
+     `reportdesign` reportdesign,
+     `recieptmsg` recieptmsg
+WHERE
+     salereturn.ReturnNo = $P{returnno}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="customerid" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="customername" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="remark" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="customerType" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="balanceType" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="OpeningDate" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="OpenigBalance" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DipositAmt" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="creditAmnt" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cashamt" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="saleamount" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="paidamount" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totaldiscount" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Balancedue" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ContactNo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inputuser" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="picture" class="java.lang.Object">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ReturnNo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="invoiceNo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="invoicetype" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="returndate" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TotalAmount" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TotalVat" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Totalinvoice" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="returnacash" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prevdue" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="companyname" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="arebicName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="headeraddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="contact" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="footeraddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cashmsg" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="creditmsg" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bookmsg" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="returnmsg" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="language" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cashinvoice" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="creditinvoice" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="salereturn_id" class="java.lang.Integer"/>
+	<field name="salereturn_ReturnNo" class="java.lang.String"/>
+	<field name="salereturn_invoiceNo" class="java.lang.String"/>
+	<field name="salereturn_invoicetype" class="java.lang.String"/>
+	<field name="salereturn_returndate" class="java.lang.String"/>
+	<field name="salereturn_TotalAmount" class="java.lang.Double"/>
+	<field name="salereturn_TotalVat" class="java.lang.Double"/>
+	<field name="salereturn_Totalinvoice" class="java.lang.Double"/>
+	<field name="salereturn_returnacash" class="java.lang.Double"/>
+	<field name="salereturn_prevdue" class="java.lang.Double"/>
+	<field name="salereturn_customerid" class="java.lang.Integer"/>
+	<field name="recieptmsg_id" class="java.lang.Integer"/>
+	<field name="recieptmsg_returnmsg" class="java.lang.String"/>
+	<field name="customerinfo_customername" class="java.lang.String"/>
+	<field name="reportdesign_picture" class="java.lang.Object"/>
+	<field name="reportdesign_headeraddress" class="java.lang.String"/>
+	<field name="reportdesign_contact" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="78" width="30" height="11" uuid="b9476e36-ce72-406e-8a48-af9fb35b735f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Return No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="89" width="23" height="10" uuid="b7dfd2ee-1f43-4aad-9109-404b2b8a2691"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Cashier:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="30" y="78" width="42" height="11" uuid="fb5daf0c-2197-4336-ac71-6d98859a1a3a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{salereturn_ReturnNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="23" y="89" width="121" height="10" uuid="2d1aa501-43c4-40f4-b818-bbd7654f11eb"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cashier}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="35" width="144" height="10" uuid="bbcdd805-d710-4ab6-ba4d-c91c5850bdd6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Return Invoice]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="85" y="47" width="15" height="11" uuid="f5ee7524-22dc-495d-9c4a-1c6691f6ae1d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="0" y="47" width="72" height="19" uuid="a350895d-b311-4f63-a8af-a66b2c95796d"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="5" barHeight="200">
+					<jr:codeExpression><![CDATA[$P{returnno}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement x="27" y="68" width="117" height="11" uuid="1f49b234-1553-415c-97cf-18ff99392cb3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customerinfo_customername}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="68" width="28" height="11" uuid="143498cc-be67-4373-93ec-5ef8affe8ef9"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Customer:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="99" y="47" width="45" height="11" uuid="1cf48ec4-1fb9-46a4-8674-e1cc5726c411"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{salereturn_returndate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="72" y="78" width="38" height="11" uuid="0c2b7bcc-7225-4957-983f-9342eec81721"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Invoice No:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="78" width="34" height="11" uuid="57d52625-ab5c-4314-b9ed-f539ccfea075"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invoiceNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-1" y="0" width="145" height="12" uuid="68527989-6dbb-4dab-9172-2675b8c38c72"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-1" y="11" width="145" height="12" uuid="b19e1613-7cb6-4f45-a06e-99b9118ed687"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headeraddress}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-1" y="23" width="145" height="12" uuid="440bad2e-fc13-4b18-bdd8-c5ff1fff8062"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contact}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="80" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table 2" style="table 2" x="0" y="0" width="144" height="80" uuid="bf105695-ad7e-408c-b570-db9df3ee6dc6"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="returntbl" uuid="21469c1f-56e2-4bd7-b838-5b60b4a8b243">
+						<datasetParameter name="returnno">
+							<datasetParameterExpression><![CDATA[$P{returnno}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="70" uuid="9df4cd6f-39a9-4919-9ce7-f615e87a7464">
+						<jr:columnHeader style="table 1_TH" height="23" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="23" uuid="1caed700-66a9-4a09-a7f3-c2fd44952a2a"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Description]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="44" rowSpan="1"/>
+						<jr:detailCell style="table 2_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="70" height="20" uuid="c9bfbfe8-0a05-4409-b07b-5a07bd17b10a"/>
+								<box leftPadding="2"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{REPORT_COUNT}+"."+$F{Item}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="20" uuid="90bfe90a-e23b-4882-a473-df7acc9ea972">
+						<jr:columnHeader style="table 1_TH" height="23" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="20" height="23" uuid="96b3ea9f-eff1-406d-a949-f134052dae62"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Qty]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="44" rowSpan="1"/>
+						<jr:detailCell style="table 2_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="20" height="20" uuid="007f2f6c-f01b-457a-8cb2-bc15433f29ab"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="27" uuid="00a803a2-2d23-472c-ade7-a709a9473551">
+						<jr:columnHeader style="table 1_TH" height="23" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="27" height="23" uuid="ba47bd08-fa66-4c6b-892a-303b79a3874f"/>
+								<box leftPadding="3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Unit Rate]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="44" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="27" height="11" uuid="081d901e-58de-42ae-bdf3-ef3e352f3390"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Amount]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="11" width="27" height="11" uuid="0fd1ce1e-e632-40e1-96e5-233eac9b9bad"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Vat]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="22" width="27" height="11" uuid="a3d77475-30f9-4c46-a294-d4271656a259"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Net Total]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="33" width="27" height="11" uuid="ce4fb040-6bec-466a-bef5-37d4df2e8833"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Retrun Cash]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell style="table 2_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="27" height="20" uuid="2809730b-cd81-4a93-a77a-1d5eb7be3358"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{UnitRate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="26" uuid="166e303a-cc95-46b5-806b-6f38e3afc03f">
+						<jr:columnHeader style="table 1_TH" height="23" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="26" height="23" uuid="ee1bf814-fc51-4f03-90b8-e800b019c03b"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="44" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="26" height="11" uuid="a0e77d58-0bb0-4926-aa99-f70fb2cfaf18"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{stotalamount}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="11" width="26" height="11" uuid="b37b1a72-e79c-4449-b236-fe6322d7d270"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{svat}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="22" width="26" height="11" uuid="62c19a2f-3e8c-4c7a-9264-0a0ed9848555"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{sinvoice}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="33" width="26" height="11" uuid="30c1a9bd-1bcc-4f9b-9571-ad6c97ff319a"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{returncash}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="table 2_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="26" height="20" uuid="b806ab3c-98a1-440f-a56e-ca64d6203491"/>
+								<box topPadding="3" leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{totalamount}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="76" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="9" width="55" height="20" uuid="92d5cd3f-065b-40ab-81e1-de0ca41ea37f"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Customer Sign]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="74" y="9" width="70" height="20" uuid="f1976cd4-6b45-4172-b77a-c876f84de3a7"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Sales Executive]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="65" width="144" height="8" uuid="bb47d7f9-da05-4bbe-aac1-90673ab77462"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Powerd By Vertext microsoft-+8801708911990]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="35" width="144" height="30" uuid="f2bdd4c9-08d6-46cf-90f2-fa48872c3f48"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{recieptmsg_returnmsg}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

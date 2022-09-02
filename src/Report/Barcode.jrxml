@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="144" pageHeight="108" columnWidth="130" leftMargin="7" rightMargin="7" topMargin="7" bottomMargin="7" whenResourceMissingType="Empty" uuid="b645f1ba-a23e-41da-9553-5322f25ff778">
+	<property name="ireport.zoom" value="2.3579476910000023"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="imeinumber" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     reportdesign.`companyname` AS reportdesign_companyname,
+     barcodedetails.`id` AS barcodedetails_id,
+     barcodedetails.`prcode` AS barcodedetails_prcode,
+     barcodedetails.`itemname` AS barcodedetails_itemname,
+cast(barcodedetails.`unitrate` as decimal(10,2)) AS barcodedetails_unitrate,
+     barcodedetails.`qty` AS barcodedetails_qty
+FROM
+     `reportdesign` reportdesign,
+     `barcodedetails` barcodedetails]]>
+	</queryString>
+	<field name="reportdesign_companyname" class="java.lang.String"/>
+	<field name="barcodedetails_id" class="java.lang.Integer"/>
+	<field name="barcodedetails_prcode" class="java.lang.String"/>
+	<field name="barcodedetails_itemname" class="java.lang.String"/>
+	<field name="barcodedetails_unitrate" class="java.math.BigDecimal"/>
+	<field name="barcodedetails_qty" class="java.lang.Float"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="94" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="73" width="130" height="12" uuid="303bc6af-d08d-4321-b009-5a7a51643c97"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["AED:"+$F{barcodedetails_unitrate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="11" width="130" height="17" uuid="d808e195-135b-4b8b-a655-19f68a165e7b"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{barcodedetails_itemname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="130" height="11" forecolor="#000000" uuid="e41c199b-5d2c-4eac-91ca-7d6255a3d08f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REEHA PERFUMES]]></text>
+			</staticText>
+			<elementGroup>
+				<componentElement>
+					<reportElement x="0" y="28" width="130" height="29" uuid="5a549b8a-f603-42ff-867d-79b8ffdf94ad"/>
+					<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39 (Extended)" drawText="false" checksumRequired="false" barHeight="0">
+						<jr:codeExpression><![CDATA[$F{barcodedetails_prcode}]]></jr:codeExpression>
+					</jr:barbecue>
+				</componentElement>
+			</elementGroup>
+			<textField>
+				<reportElement x="0" y="57" width="130" height="16" uuid="dca41360-f7eb-452d-ae48-b118078b234e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{barcodedetails_prcode}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8a7f122b-04dd-4460-b198-812c7f8889b1">
+	<property name="ireport.zoom" value="1.0000000000000007"/>
+	<property name="ireport.x" value="142"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#333333"/>
+			<topPen lineColor="#333333"/>
+			<leftPen lineColor="#333333"/>
+			<bottomPen lineColor="#333333"/>
+			<rightPen lineColor="#333333"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F8F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="1.0" lineColor="#333333"/>
+			<leftPen lineWidth="1.0" lineColor="#333333"/>
+			<bottomPen lineWidth="1.0" lineColor="#333333"/>
+			<rightPen lineWidth="1.0" lineColor="#333333"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="1.0" lineColor="#333333"/>
+			<leftPen lineWidth="1.0" lineColor="#333333"/>
+			<bottomPen lineWidth="1.0" lineColor="#333333"/>
+			<rightPen lineWidth="1.0" lineColor="#333333"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="ce07df74-8921-4d5b-8480-72992403c05e">
+		<parameter name="totalrecieve" class="java.lang.String"/>
+		<parameter name="totalcredit" class="java.lang.String"/>
+		<field name="TR No" class="java.lang.String"/>
+		<field name="Customer ID" class="java.lang.String"/>
+		<field name="Customer" class="java.lang.String"/>
+		<field name="Recive Date" class="java.lang.String"/>
+		<field name="Recieve" class="java.lang.Double"/>
+		<field name="Payment Type" class="java.lang.String"/>
+		<field name="Bank" class="java.lang.String"/>
+		<field name="Acc No" class="java.lang.String"/>
+		<field name="Cheque No" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="description" class="java.lang.String"/>
+	<parameter name="ItemDataSource" class="net.sf.jasperreports.engine.data.JRTableModelDataSource"/>
+	<parameter name="totalcredit" class="java.lang.String"/>
+	<parameter name="totalrecieve" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from reportdesign]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="picture" class="java.awt.Image">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="companyname" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="arebicName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="headeraddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="contact" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="footeraddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="90" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="735" y="64" width="65" height="20" uuid="80c70b82-cf6d-4749-94dc-fe9ad131474b"/>
+				<box rightPadding="0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="333" y="64" width="136" height="20" uuid="302e7da1-7f06-49ce-89ad-8c7f19ed0a7b"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Credit Payment Details]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="277" y="43" width="248" height="14" uuid="80605ce4-b866-4b15-984b-e2f99907e348"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contact}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="277" y="2" width="248" height="26" forecolor="#000000" uuid="46b753aa-f0a6-4b17-8d3f-35f0fef0bf2d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="277" y="28" width="248" height="14" uuid="caa69534-6884-4b22-9078-80a6f8369dc7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headeraddress}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="2" y="59" width="800" height="1" uuid="de5ff009-ec82-46ea-80db-7f591782f537"/>
+			</line>
+			<staticText>
+				<reportElement x="705" y="64" width="33" height="20" uuid="8d564a1d-c8c5-45aa-a9bc-6de23f5ae2a9"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="125">
+			<componentElement>
+				<reportElement key="table" style="table" x="2" y="0" width="798" height="125" uuid="0e717b84-4dec-4de1-aa2a-ab76c2880c0b"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="fbf9ae52-033c-415d-ab4e-40987da3c560">
+						<datasetParameter name="totalcredit">
+							<datasetParameterExpression><![CDATA[$P{totalcredit}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="totalrecieve">
+							<datasetParameterExpression><![CDATA[$P{totalrecieve}]]></datasetParameterExpression>
+						</datasetParameter>
+						<dataSourceExpression><![CDATA[$P{ItemDataSource}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="40" uuid="37712761-004e-40e2-a447-6903e72bfcd9">
+						<jr:columnHeader style="table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="40" height="20" uuid="acefca63-19b2-4ea7-b411-03533f4ee2d9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[SL No]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="30" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="40" height="20" uuid="493c6fc1-ede4-407d-8ea6-690e934dad6e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="d78d5b93-50cf-4339-8401-f01f8a6c3250">
+						<jr:columnHeader style="table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="20" uuid="294febb2-e031-426a-8bdb-f100968b3a1b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[TR No]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="30" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20" uuid="5c830038-78d4-4255-9b41-a7a6c95377ce"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{TR No}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="214" uuid="7629820a-ee77-473a-bbb5-c106ab0e95fd">
+						<jr:columnHeader style="table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="150" height="20" uuid="a93cafc5-7894-45c6-8741-13010ec2c2ae"/>
+								<box leftPadding="5"/>
+								<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+								<text><![CDATA[Customer]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="214" height="30" uuid="0786d159-f770-4c8e-9217-2083577eeff9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Net Total]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="214" height="20" uuid="0b21936d-92c4-4e87-aa2b-4f6a9613058c"/>
+								<box leftPadding="5"/>
+								<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{Customer}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="190102fe-fa2a-45a2-af74-4bb04a408730">
+						<jr:columnHeader style="table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="20" uuid="803f2dd6-5f6d-4f77-8da5-8f1e523a45d9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Recive Date]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="30" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="70" height="20" uuid="2c617358-2f57-4296-ad3f-9c7cb24925f2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{Recive Date}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="71" uuid="b0fe826e-9059-4329-bc1b-daa58a0c7bc7">
+						<jr:columnHeader style="table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="71" height="20" uuid="4d760f2b-45b6-4efc-9022-ffd97c26e682"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Recieve]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="71" height="30" uuid="33238f39-6c8f-493d-8804-0fde6e7a7153"/>
+								<box rightPadding="3"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{totalrecieve}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="71" height="20" uuid="e54c5fdf-62a9-4eda-9f0b-91cfeea416d9"/>
+								<box rightPadding="3"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{Recieve}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="77" uuid="01e7b1dc-9a67-45c2-8dff-a71e5e115a2e">
+						<jr:columnHeader style="table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="77" height="20" uuid="1766d3a0-e186-4cb9-84b5-70da7ce01662"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Payment Type]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="30" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="77" height="20" uuid="652cdb55-1d72-44a9-9bb3-c753f0db217e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{Payment Type}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="77" uuid="d9fadaae-524c-4ec3-acad-54d2e133183d">
+						<jr:columnHeader style="table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="77" height="20" uuid="9185c3a3-e653-4784-8699-1ace11bb55a3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Bank]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="30" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="77" height="20" uuid="e152dc28-55e0-4ddf-9a7b-1895aef8470e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{Bank}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="86" uuid="b5fb469b-e1dc-4c3b-b4f1-a7a0f0be1bcb">
+						<jr:columnHeader style="table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="86" height="20" uuid="ff45b4cc-51b6-4fb1-89b1-35d1b93a26c7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Acc No]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="30" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="86" height="20" uuid="931cf0e2-c4ea-4299-8a5f-c3a6495fd7f3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{Acc No}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="112" uuid="bb225fe5-0d1a-4f0a-bff0-79c8aa7adfed">
+						<jr:columnHeader style="table_CH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="112" height="20" uuid="d18a8725-818a-4438-8b53-d3cebc483bbc"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Cheque No]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="30" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="112" height="20" uuid="699d3c2f-a087-4884-903f-a02273f3b0e2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{Cheque No}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

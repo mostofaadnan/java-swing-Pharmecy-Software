@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="229" pageHeight="536" columnWidth="193" leftMargin="18" rightMargin="18" topMargin="18" bottomMargin="18" isIgnorePagination="true" uuid="b39c2546-87b8-494c-809d-d873f4d2b18d">
+	<property name="ireport.zoom" value="1.9487171000000019"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F8F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFBFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F8F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFBFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<subDataset name="BookTable" uuid="93c6f275-046c-4645-8b10-7236dcaef3fa">
+		<parameter name="bookingno" class="java.lang.String"/>
+		<parameter name="advanced" class="java.math.BigDecimal"/>
+		<parameter name="remain" class="java.math.BigDecimal"/>
+		<queryString>
+			<![CDATA[Select 
+(select ita.itemName from item ita where ita.Itemcode=sd.prcode and sd.bookid=$P{bookingno} ) as 'Item',qty,
+Cast(unitrate as decimal(10,2)) as 'Unit',
+Cast(NetTotal as decimal(10,2)) as 'Nettotal',(select Cast(sum(NetTotal) as decimal(10,2))from bookdetails sd where sd.bookid=$P{bookingno}) as 'Allnettotal'
+from bookdetails sd where sd.bookid=$P{bookingno}]]>
+		</queryString>
+		<field name="Item" class="java.lang.String"/>
+		<field name="qty" class="java.lang.Float">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="Unit" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="Nettotal" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="Allnettotal" class="java.math.BigDecimal"/>
+	</subDataset>
+	<parameter name="cashier" class="java.lang.String"/>
+	<parameter name="bookingno" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     DATE_FORMAT(book.inputdate,'%d-%m-%Y') AS book_inputdate,
+     Cast(book.`advanced`as decimal(10,2)) AS book_advanced,
+     Cast(book.`remain` as decimal(10,2)) AS book_remain,
+     recieptmsg.`id` AS recieptmsg_id,
+     recieptmsg.`bookmsg` AS recieptmsg_bookmsg,
+     reportdesign.`picture` AS reportdesign_picture,
+     reportdesign.`headeraddress` AS reportdesign_headeraddress,
+     reportdesign.`contact` AS reportdesign_contact,
+     book.`bookid` AS book_bookid,
+     book.`cusid` AS book_cusid,
+     customerinfo.`customerid` AS customerinfo_customerid,
+     customerinfo.`customername` AS customerinfo_customername,
+     reportdesign.`companyname` AS reportdesign_companyname
+FROM
+     `customerinfo` customerinfo INNER JOIN `book` book ON customerinfo.`customerid` = book.`cusid`,
+     `recieptmsg` recieptmsg,
+     `reportdesign` reportdesign
+WHERE
+     book.bookid = $P{bookingno}]]>
+	</queryString>
+	<field name="book_inputdate" class="java.lang.String"/>
+	<field name="book_advanced" class="java.math.BigDecimal"/>
+	<field name="book_remain" class="java.math.BigDecimal"/>
+	<field name="recieptmsg_id" class="java.lang.Integer"/>
+	<field name="recieptmsg_bookmsg" class="java.lang.String"/>
+	<field name="reportdesign_picture" class="java.awt.Image"/>
+	<field name="reportdesign_headeraddress" class="java.lang.String"/>
+	<field name="reportdesign_contact" class="java.lang.String"/>
+	<field name="book_bookid" class="java.lang.String"/>
+	<field name="book_cusid" class="java.lang.String"/>
+	<field name="customerinfo_customerid" class="java.lang.String"/>
+	<field name="customerinfo_customername" class="java.lang.String"/>
+	<field name="reportdesign_companyname" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="129" splitType="Stretch">
+			<staticText>
+				<reportElement x="138" y="75" width="15" height="12" uuid="c2fdccf8-e85e-4201-9901-6b6fbf1a8782"/>
+				<textElement verticalAlignment="Top">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="36" y="105" width="102" height="10" uuid="904d9bb3-96ef-43cd-a608-8a4e4a71dfc4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cashier}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="95" width="36" height="10" uuid="3d528918-0f2a-4b36-b75f-1ca559136fd7"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Booking No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="105" width="36" height="10" uuid="6001c7c4-599f-462c-b58a-679dbfaeabb5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Cashier:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="36" y="95" width="102" height="10" uuid="a311765c-8005-495e-bbaa-8621807b2461"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{bookingno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="65" width="193" height="10" uuid="d510e622-068b-4e3d-8dcf-969f3e719abe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Booking]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="153" y="75" width="40" height="12" uuid="d4b781c9-017d-4017-b8ce-191b657886e1"/>
+				<textElement verticalAlignment="Top">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{book_inputdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="115" width="36" height="10" uuid="6780802f-3675-478f-afb3-7f21e86c127e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Customer:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="36" y="115" width="157" height="10" uuid="1b314895-74b8-4077-a6ec-679c110ea5aa"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customerinfo_customername}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="0" y="75" width="72" height="19" uuid="15b6a7c2-0395-44c9-bc2d-f5a9f96fddf2"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barWidth="5" barHeight="200">
+					<jr:codeExpression><![CDATA[$P{bookingno}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement x="0" y="40" width="193" height="12" uuid="a4d90891-1cd0-488b-b715-5b7765349c61"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reportdesign_headeraddress}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="51" width="193" height="12" uuid="28512f28-e828-40e4-b556-8c646ed44719"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reportdesign_contact}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement x="87" y="0" width="30" height="27" isRemoveLineWhenBlank="true" uuid="c5043967-3814-4df6-abfd-b69f0a5ff1c4"/>
+				<imageExpression><![CDATA[$F{reportdesign_picture}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="29" width="193" height="11" uuid="3a7c4fed-b9cb-459b-8981-929225a8b51b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reportdesign_companyname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="80" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table 1" style="table" x="0" y="0" width="193" height="80" uuid="40492e9c-d845-457e-96c4-c9342f336b56"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="BookTable" uuid="5493f308-8da6-44d6-8a3e-ecc5d54da54d">
+						<datasetParameter name="bookingno">
+							<datasetParameterExpression><![CDATA[$P{bookingno}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="advanced">
+							<datasetParameterExpression><![CDATA[$F{book_advanced}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="remain">
+							<datasetParameterExpression><![CDATA[$F{book_remain}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="0e654ccc-7caa-41a3-8b3b-3eba8023c0cb">
+						<jr:columnHeader style="table_TH" height="13" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="13" uuid="261be4b4-f5ed-4a26-b5eb-7623fc20c1cc"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Description]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="24" height="20" uuid="eac2074d-1898-441f-baf8-d4344e8d6717"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="23" y="0" width="67" height="20" uuid="41f0df12-37c4-4a06-945b-fcf5a70fca60"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Item}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="35" uuid="c0994559-b840-4902-9046-d6dde29221bb">
+						<jr:columnHeader style="table_TH" height="13" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="35" height="13" uuid="efb57f38-aede-4c6c-825f-98dc111630c1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Qty]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="35" height="20" uuid="a9ea31e2-ca54-4e83-8018-70f94fe67b0d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="45" uuid="710f05e7-cf07-4c58-a980-210f6de06cea">
+						<jr:columnHeader style="table_TH" height="13" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="45" height="13" uuid="75019522-a07a-4c0e-9f31-dc215d0e717b"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Unit Rate]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="45" height="10" uuid="6e051705-8cf0-4cd3-853c-df19e6d770f6"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Net Total]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="10" width="45" height="10" uuid="3e7955e9-8ccc-4046-abff-3b415df1d593"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Advanced]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="20" width="45" height="10" uuid="401710dc-bd3d-4d9a-906e-6c214dd2c186"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<text><![CDATA[Remain]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="45" height="20" uuid="f86f4675-7aa7-43c9-8271-9281289405ee"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Unit}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="52" uuid="7ddd8cbe-4446-4204-8b88-1a45eddd138f">
+						<jr:columnHeader style="table_TH" height="13" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="52" height="13" uuid="4aa0c0c3-543a-4cb4-b8a5-cfc26201a949"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total ]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="52" height="10" uuid="ed72724c-227c-4e38-8424-1b64f40db28a"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Allnettotal}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="10" width="52" height="10" uuid="5009416e-b802-44e9-8fee-12cfd34fbc62"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{advanced}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="20" width="52" height="10" uuid="57a8743e-7d71-4052-81e2-4f6a480afbef"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{remain}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="table 1_TD" height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="52" height="20" uuid="33d2b51a-99a6-4224-b046-f4cd8e51cf35"/>
+								<box leftPadding="3"/>
+								<textElement verticalAlignment="Middle">
+									<font size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Nettotal}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="69" splitType="Stretch">
+			<staticText>
+				<reportElement x="114" y="15" width="79" height="12" uuid="78fb0026-9298-4c76-b527-9c013e86c6b9"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Sales Executive]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="15" width="55" height="12" uuid="bd0fe9d5-6e80-4d58-a88f-4fbf79763334"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Customer Sign]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="56" width="193" height="10" uuid="2b2e94bf-69ad-4ed3-8dbf-b470ce210b41"/>
+				<textElement textAlignment="Center">
+					<font size="6" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Powerd By Vertext microsoft-+8801708911990]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="36" width="193" height="20" uuid="c1ff4b8a-50c5-485c-ad31-07e7f43fcf69"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{recieptmsg_bookmsg}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

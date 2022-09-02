@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="559" leftMargin="18" rightMargin="18" topMargin="20" bottomMargin="20" uuid="34b3155a-5351-48c2-9f75-2fc402c77c16">
+	<property name="ireport.zoom" value="1.3310000000000017"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="transactionno" class="java.lang.String"/>
+	<parameter name="inword" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     Cast(invoicepaymenthistory.`paidamount` as decimal(10,2)) AS invoicepaymenthistory_paidamount,
+     invoicepaymenthistory.`id` AS invoicepaymenthistory_id,
+     invoicepaymenthistory.`TR_No` AS invoicepaymenthistory_TR_No,
+     invoicepaymenthistory.`customerid` AS invoicepaymenthistory_customerid,
+     invoicepaymenthistory.`paymentdate` AS invoicepaymenthistory_paymentdate,
+     invoicepaymenthistory.`paymenttype` AS invoicepaymenthistory_paymenttype,
+     invoicepaymenthistory.`bank` AS invoicepaymenthistory_bank,
+     invoicepaymenthistory.`accno` AS invoicepaymenthistory_accno,
+     invoicepaymenthistory.`chaqueno` AS invoicepaymenthistory_chaqueno,
+     
+     invoicepaymenthistory.`inputuser` AS invoicepaymenthistory_inputuser,
+     customerinfo.`customername` AS customerinfo_customername,
+     customerinfo.`id` AS customerinfo_id,
+     reportdesign.`id` AS reportdesign_id,
+     reportdesign.`companyname` AS reportdesign_companyname,
+     reportdesign.`arebicName` AS reportdesign_arebicName,
+     reportdesign.`headeraddress` AS reportdesign_headeraddress,
+     reportdesign.`description` AS reportdesign_description,
+     reportdesign.`footeraddress` AS reportdesign_footeraddress,
+     reportdesign.`contact` AS reportdesign_contact
+     
+FROM
+     `customerinfo` customerinfo INNER JOIN `invoicepaymenthistory` invoicepaymenthistory ON customerinfo.`customerid` = invoicepaymenthistory.`customerid`,
+     `reportdesign` reportdesign
+WHERE
+     invoicepaymenthistory.TR_No = $P{transactionno}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="customerid" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="customername" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="remark" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="customerType" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="balanceType" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="OpeningDate" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="OpenigBalance" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DipositAmt" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="creditAmnt" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cashamt" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="saleamount" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="paidamount" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totaldiscount" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Balancedue" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ContactNo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inputuser" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="picture" class="java.lang.Object">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TR_No" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="paymentdate" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="paymenttype" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bank" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="accno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="chaqueno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="companyname" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="arebicName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="headeraddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="contact" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="footeraddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="invoicepaymenthistory_paidamount" class="java.math.BigDecimal"/>
+	<field name="invoicepaymenthistory_id" class="java.lang.Integer"/>
+	<field name="invoicepaymenthistory_TR_No" class="java.lang.String"/>
+	<field name="invoicepaymenthistory_customerid" class="java.lang.String"/>
+	<field name="invoicepaymenthistory_paymentdate" class="java.sql.Date"/>
+	<field name="invoicepaymenthistory_paymenttype" class="java.lang.String"/>
+	<field name="invoicepaymenthistory_bank" class="java.lang.String"/>
+	<field name="invoicepaymenthistory_accno" class="java.lang.String"/>
+	<field name="invoicepaymenthistory_chaqueno" class="java.lang.String"/>
+	<field name="invoicepaymenthistory_inputuser" class="java.lang.Integer"/>
+	<field name="customerinfo_customername" class="java.lang.String"/>
+	<field name="customerinfo_id" class="java.lang.Integer"/>
+	<field name="reportdesign_id" class="java.lang.Integer"/>
+	<field name="reportdesign_companyname" class="java.lang.String"/>
+	<field name="reportdesign_arebicName" class="java.lang.String"/>
+	<field name="reportdesign_headeraddress" class="java.lang.String"/>
+	<field name="reportdesign_description" class="java.lang.String"/>
+	<field name="reportdesign_footeraddress" class="java.lang.String"/>
+	<field name="reportdesign_contact" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="90" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="490" y="64" width="65" height="20" uuid="80c70b82-cf6d-4749-94dc-fe9ad131474b"/>
+				<box rightPadding="0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="183" y="64" width="192" height="20" uuid="302e7da1-7f06-49ce-89ad-8c7f19ed0a7b"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Payment Receipt Voucher]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="153" y="43" width="248" height="14" uuid="80605ce4-b866-4b15-984b-e2f99907e348"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contact}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="2" width="248" height="26" forecolor="#000000" uuid="46b753aa-f0a6-4b17-8d3f-35f0fef0bf2d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="28" width="248" height="14" uuid="caa69534-6884-4b22-9078-80a6f8369dc7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headeraddress}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="59" width="555" height="1" uuid="de5ff009-ec82-46ea-80db-7f591782f537"/>
+			</line>
+			<staticText>
+				<reportElement x="401" y="64" width="92" height="20" uuid="8d564a1d-c8c5-45aa-a9bc-6de23f5ae2a9"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Printing Date:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="128" splitType="Stretch">
+			<line>
+				<reportElement x="60" y="110" width="499" height="1" forecolor="#3333FF" uuid="cd477efa-bac0-4466-b80b-1f7117390389"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="60" y="67" width="499" height="1" forecolor="#3333FF" uuid="5bd2f9f9-5f2f-4ced-bd86-fd27a3ab48d9"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="82" width="60" height="14" uuid="430199d2-1a13-473d-9839-ce5115c64346"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Acc No]]></text>
+			</staticText>
+			<line>
+				<reportElement x="60" y="53" width="499" height="1" forecolor="#3333FF" uuid="6b9b05cc-d4b2-408e-8b67-d6c1edf11c5d"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="54" width="60" height="14" uuid="50a8aac8-08bb-4701-ae79-75f19286046b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Paid Amount:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="60" y="81" width="499" height="1" forecolor="#3333FF" uuid="4a36d9e3-5c32-4ad6-b198-c2d1073e60bc"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="68" width="60" height="14" uuid="35238c3d-a1b1-4ec2-b66f-40c99649b9e3"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Payment type:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="96" width="60" height="14" uuid="8a55c99f-8a86-4bda-a503-036e58356177"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[In Words:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="60" height="14" uuid="7f7a2e3a-3b68-4075-8c3e-7bedb86f43ac"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Received From:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="61" y="95" width="100" height="1" forecolor="#3333FF" uuid="d4cfa48d-cac9-47c8-adbe-6b776a7591cf"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="161" y="82" width="45" height="14" uuid="a1f2f223-a504-40c1-a847-e1f80a0c72dc"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Cheque No:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="206" y="95" width="120" height="1" forecolor="#3333FF" uuid="5be40ee5-7e80-4d2e-8950-ee508823aeaa"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="326" y="82" width="28" height="14" uuid="327a2492-28f1-43e5-80c6-6c9e40b6984a"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Bank:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="354" y="95" width="205" height="1" forecolor="#3333FF" uuid="66129671-1f9d-4f5a-9879-0a0f02fb3ad6"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="60" y="40" width="499" height="14" uuid="bea4cfb9-260f-4209-86a5-3da913f98554"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customerinfo_customername}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="54" width="499" height="14" uuid="35bb3301-ec77-4e23-8dff-35201b1654ea"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invoicepaymenthistory_paidamount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="68" width="499" height="14" uuid="fa235261-b8af-4c39-b6bb-1ab8fa1eac89"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invoicepaymenthistory_paymenttype}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="82" width="101" height="14" uuid="f647daa4-5818-4e5d-8a1a-9197d29e1323"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invoicepaymenthistory_accno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="206" y="82" width="120" height="14" uuid="9e3a4a6a-b714-4c8a-a2dc-3c3924faedeb"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invoicepaymenthistory_chaqueno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="354" y="82" width="205" height="14" uuid="8d3c3781-2c92-43fb-97da-9fe01353801a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invoicepaymenthistory_bank}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="96" width="499" height="14" uuid="17a94959-4789-4dc8-a851-fc87746d8d12"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{inword}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="22" width="277" height="14" uuid="6afc4d26-541d-4f44-a456-e4a7a5eb5ddd"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Receipt No: "+$F{invoicepaymenthistory_TR_No}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="8" width="277" height="14" uuid="735be6cf-5b02-4011-9307-019f84a7acee"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Date: "+$F{invoicepaymenthistory_paymentdate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="50">
+			<line>
+				<reportElement x="5" y="33" width="86" height="1" uuid="da2fba15-0c9f-46cb-829c-22f78bc5a1c0"/>
+			</line>
+			<line>
+				<reportElement x="137" y="33" width="81" height="1" uuid="c02322fd-e7dc-412e-b42a-982328e172ff"/>
+			</line>
+			<staticText>
+				<reportElement x="5" y="35" width="86" height="15" uuid="3154a5fe-4522-4ba2-8528-92bb819b5f96"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Customer's Signature]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="137" y="35" width="81" height="15" uuid="77d83256-3858-49c3-a82c-cc3ced0962b6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Prepared by]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="264" y="34" width="116" height="15" uuid="10488a05-b2de-4536-946d-90b7ffe4f6de"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Checked by]]></text>
+			</staticText>
+			<line>
+				<reportElement x="441" y="33" width="117" height="1" uuid="7bded5f5-3b81-413d-8cf7-a53da0597811"/>
+			</line>
+			<staticText>
+				<reportElement x="441" y="35" width="117" height="15" uuid="2b91685e-c651-4b3e-b82c-ed7640fc24d4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Authorized by]]></text>
+			</staticText>
+			<line>
+				<reportElement x="264" y="33" width="116" height="1" uuid="34dd3145-6ed9-4fc4-a002-bf5553e0c985"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="144" pageHeight="110" columnWidth="144" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="724fd97a-a738-4724-82ba-8a80acf07431">
+	<property name="ireport.zoom" value="1.9487171000000019"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="purchaseCode" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     purchasedetails.`prcode` AS purchasedetails_prcode,
+     item.`Itemcode` AS item_Itemcode,
+     item.`itemName` AS item_itemName,
+     barcodeproduct.`itemcode` AS barcodeproduct_itemcode,
+     barcodeproduct.`barcode` AS barcodeproduct_barcode,
+     barcodeproduct.`mrp` AS barcodeproduct_mrp,
+     purchasedetails.`purchaseCode` AS purchasedetails_purchaseCode,
+     reportdesign.`id` AS reportdesign_id,
+     reportdesign.`picture` AS reportdesign_picture,
+     count(purchasedetails.`qty`)
+FROM
+     `item` item INNER JOIN `purchasedetails` purchasedetails ON item.`Itemcode` = purchasedetails.`prcode`
+     INNER JOIN `barcodeproduct` barcodeproduct ON purchasedetails.`barcode` = barcodeproduct.`barcode`,
+     `reportdesign` reportdesign
+WHERE
+     purchasedetails.`purchaseCode` = $P{purchaseCode}]]>
+	</queryString>
+	<field name="purchasedetails_prcode" class="java.lang.String"/>
+	<field name="item_Itemcode" class="java.lang.String"/>
+	<field name="item_itemName" class="java.lang.String"/>
+	<field name="barcodeproduct_itemcode" class="java.lang.String"/>
+	<field name="barcodeproduct_barcode" class="java.lang.String"/>
+	<field name="barcodeproduct_mrp" class="java.lang.Double"/>
+	<field name="purchasedetails_purchaseCode" class="java.lang.String"/>
+	<field name="reportdesign_id" class="java.lang.Integer"/>
+	<field name="reportdesign_picture" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="80">
+			<elementGroup>
+				<textField>
+					<reportElement x="67" y="61" width="53" height="12" uuid="8be4c63a-c8d5-4615-acc8-17f28ab2d06b"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{barcodeproduct_mrp}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="22" y="21" width="98" height="11" uuid="084e86ef-00bc-4a3c-bb40-fd285ca2f89e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{item_itemName}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="45" y="61" width="26" height="12" uuid="398dc3e7-31d9-44a9-84f4-88662ddd30d5"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[MRP:]]></text>
+				</staticText>
+			</elementGroup>
+			<componentElement>
+				<reportElement x="22" y="32" width="98" height="30" uuid="36bafb4b-fc99-4454-89c4-5c3c3235c552"/>
+				<jr:EAN13 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom" checksumMode="ignore">
+					<jr:codeExpression><![CDATA[$F{barcodeproduct_barcode}]]></jr:codeExpression>
+				</jr:EAN13>
+			</componentElement>
+			<image scaleImage="FillFrame">
+				<reportElement x="22" y="11" width="98" height="10" uuid="ac10e8fe-6f38-4bd6-9739-bdbd895336af"/>
+				<imageExpression><![CDATA["C:\\Users\\adnan\\Documents\\NetBeansProjects\\Hadiah\\src\\Report\\hadia-barcode.png"]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>

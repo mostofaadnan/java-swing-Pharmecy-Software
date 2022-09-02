@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="129" pageHeight="108" columnWidth="129" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f2313290-90de-424a-bf81-66bfd54016f8">
+	<property name="ireport.zoom" value="2.1435888100000016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Quantity" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     reportdesign.`companyname` AS reportdesign_companyname,
+     barcodedetails.`id` AS barcodedetails_id,
+     barcodedetails.`prcode` AS barcodedetails_prcode,
+     barcodedetails.`itemname` AS barcodedetails_itemname,
+cast(barcodedetails.`unitrate` as decimal(10,2)) AS barcodedetails_unitrate,
+     barcodedetails.`qty` AS barcodedetails_qty
+FROM
+     `reportdesign` reportdesign,
+     `barcodedetails` barcodedetails]]>
+	</queryString>
+	<field name="reportdesign_companyname" class="java.lang.String"/>
+	<field name="barcodedetails_id" class="java.lang.Integer"/>
+	<field name="barcodedetails_prcode" class="java.lang.String"/>
+	<field name="barcodedetails_itemname" class="java.lang.String"/>
+	<field name="barcodedetails_unitrate" class="java.math.BigDecimal"/>
+	<field name="barcodedetails_qty" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="96" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="129" height="40" uuid="d808e195-135b-4b8b-a655-19f68a165e7b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Segoe UI" size="12" isBold="true" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{barcodedetails_itemname}]]></textFieldExpression>
+			</textField>
+			<elementGroup/>
+			<componentElement>
+				<reportElement x="26" y="40" width="200" height="50" uuid="8b803d27-75ce-46f1-9ba7-742bec7472f6"/>
+				<jr:Code39 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom" intercharGapWidth="0.5">
+					<jr:codeExpression><![CDATA[$F{barcodedetails_prcode}]]></jr:codeExpression>
+				</jr:Code39>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

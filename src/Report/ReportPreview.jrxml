@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c37ae507-c3b6-4b2b-a385-18249c1e0807">
+	<parameter name="companytitle" class="java.lang.String"/>
+	<parameter name="arebictitle" class="java.lang.String"/>
+	<parameter name="description" class="java.lang.String"/>
+	<parameter name="headeraddress" class="java.lang.String"/>
+	<parameter name="footeraddress" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from reportdesign]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="companyname" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="arebicName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="headeraddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="footeraddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="135" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="1" width="554" height="95" uuid="bd2284d1-c495-4d76-8289-5a6ad8e0a499"/>
+			</rectangle>
+			<textField>
+				<reportElement x="84" y="1" width="388" height="26" uuid="4da590c5-0183-460e-9322-7a3d24429bb7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Unicode MS" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{arebictitle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="27" width="388" height="29" uuid="415948e3-ac53-4435-a894-1d55cf942dd3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{companytitle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="56" width="388" height="20" uuid="b10a2789-71c7-454c-9bf3-ade950d6fbba"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="76" width="388" height="20" uuid="d9425f8b-4771-4045-8adf-901402853696"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{headeraddress}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="239" y="101" width="77" height="20" uuid="107dca28-454c-445a-a782-1913c486cb64"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Report Title]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="101" width="43" height="24" uuid="ddb6112c-15f6-475e-ae7b-c63aeee01012"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="411" y="101" width="142" height="24" uuid="aeb0fd61-5238-4a61-aaba-e0d58f25ea68"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="371" splitType="Stretch">
+			<staticText>
+				<reportElement x="18" y="27" width="512" height="244" uuid="ca26eef4-2367-4125-bc70-471f572ac6f9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="54"/>
+				</textElement>
+				<text><![CDATA[Body]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="553" height="20" uuid="7b97b456-c9b7-4238-b9ae-b0bdcc7b101c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{footeraddress}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

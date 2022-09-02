@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c2dd8397-a763-4f25-8508-dbfc755e0bb8">
+	<property name="ireport.zoom" value="4.177248169415658"/>
+	<property name="ireport.x" value="807"/>
+	<property name="ireport.y" value="247"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F8F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFBFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F8F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFBFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<subDataset name="accounthistory" uuid="077edfe5-3ded-4897-b072-9f83ea576fb7">
+		<parameter name="accNo" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[Select DATE_FORMAT(inputdate, '%d-%m-%Y') as 'InputDate', Description, bank as 'BankName', AccountNo  as 'AccNo', cast(Balance as decimal(10,2)) as 'AccAmount', cast(cashin as decimal(10,2)) as 'CashIn', cast(cashout as decimal(10,2)) as 'CashOut', cast(prasentbalance as decimal(10,2)) as 'AccBalance',cast(totalbalance as decimal(10,2)) as 'TotalBalance',remark as 'Remark' from bankoverall where AccountNo=$P{accNo}]]>
+		</queryString>
+		<field name="InputDate" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="Description" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="BankName" class="java.lang.String"/>
+		<field name="AccNo" class="java.lang.String"/>
+		<field name="AccAmount" class="java.math.BigDecimal"/>
+		<field name="CashIn" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="CashOut" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="AccBalance" class="java.math.BigDecimal"/>
+		<field name="TotalBalance" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="Remark" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="accountid" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     bankaccount.`id` AS bankaccount_id,
+     bankaccount.`bank` AS bankaccount_bank,
+     bankaccount.`address` AS bankaccount_address,
+     bankaccount.`currencytype` AS bankaccount_currencytype,
+     bankaccount.`accountholder` AS bankaccount_accountholder,
+     bankaccount.`accountno` AS bankaccount_accountno,
+     cast(bankaccount.`openingbalance` as decimal(10,2)) AS bankaccount_openingbalance,
+     cast(bankaccount.`cashin` as decimal(10,2)) AS bankaccount_cashin,
+     cast(bankaccount.`cashout` as decimal(10,2)) AS bankaccount_cashout,
+     
+     reportdesign.`id` AS reportdesign_id,
+     reportdesign.`companyname` AS reportdesign_companyname,
+     reportdesign.`arebicName` AS reportdesign_arebicName,
+     reportdesign.`headeraddress` AS reportdesign_headeraddress,
+     reportdesign.`description` AS reportdesign_description,
+     reportdesign.`footeraddress` AS reportdesign_footeraddress
+FROM
+     `bankaccount` bankaccount,
+     `reportdesign` reportdesign
+WHERE
+     bankaccount.id = $P{accountid}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bank" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="branch" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="accounttype" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="currencytype" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="accountholder" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="accountno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="accountopendate" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="openingbalance" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cashin" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cashout" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="remark" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="picture" class="java.awt.Image">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="companyname" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="arebicName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="headeraddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="footeraddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bankaccount_id" class="java.lang.Integer"/>
+	<field name="bankaccount_bank" class="java.lang.String"/>
+	<field name="bankaccount_address" class="java.lang.String"/>
+	<field name="bankaccount_currencytype" class="java.lang.String"/>
+	<field name="bankaccount_accountholder" class="java.lang.String"/>
+	<field name="bankaccount_accountno" class="java.lang.String"/>
+	<field name="bankaccount_openingbalance" class="java.math.BigDecimal"/>
+	<field name="bankaccount_cashin" class="java.math.BigDecimal"/>
+	<field name="bankaccount_cashout" class="java.math.BigDecimal"/>
+	<field name="reportdesign_id" class="java.lang.Integer"/>
+	<field name="reportdesign_companyname" class="java.lang.String"/>
+	<field name="reportdesign_arebicName" class="java.lang.String"/>
+	<field name="reportdesign_headeraddress" class="java.lang.String"/>
+	<field name="reportdesign_description" class="java.lang.String"/>
+	<field name="reportdesign_footeraddress" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="90" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="422" y="64" width="133" height="20" uuid="80c70b82-cf6d-4749-94dc-fe9ad131474b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="389" y="64" width="55" height="20" uuid="aa8aa40b-ef16-4f4b-8c3a-b21c9c45f363"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="64" width="136" height="20" uuid="302e7da1-7f06-49ce-89ad-8c7f19ed0a7b"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Account Description]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="153" y="43" width="248" height="14" uuid="80605ce4-b866-4b15-984b-e2f99907e348"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contact}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="2" width="248" height="26" forecolor="#000000" uuid="46b753aa-f0a6-4b17-8d3f-35f0fef0bf2d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="28" width="248" height="14" uuid="caa69534-6884-4b22-9078-80a6f8369dc7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headeraddress}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="59" width="555" height="1" uuid="de5ff009-ec82-46ea-80db-7f591782f537"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="46" splitType="Stretch">
+			<rectangle radius="5">
+				<reportElement x="0" y="0" width="555" height="40" uuid="ff1dd7dc-13aa-4f57-8a9e-85c31421545b"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#999999"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="130" y="0" width="45" height="20" uuid="b313aaef-d4a7-46eb-a37a-62e9745571c4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Acc No:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="175" y="0" width="92" height="20" uuid="116b4daa-2504-4594-b127-d1ef633b0a86"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{bankaccount_accountno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="267" y="0" width="68" height="20" uuid="2fb81731-3890-4857-9c39-b9f8b75ee886"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Holder Name:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="335" y="0" width="221" height="20" uuid="0fd7bb72-7de8-4fe2-ae19-8416d52f5dfe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{bankaccount_accountholder}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="85" height="20" uuid="bd344c09-7b37-4b0a-9698-712c67997219"/>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Opening balance:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="86" y="20" width="63" height="20" uuid="f2ae507f-c3e3-48db-b3fa-e319e0c24986"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{bankaccount_openingbalance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="149" y="20" width="45" height="20" uuid="8dd5c27c-5ac8-4ca7-8d4c-fdf62c14eb51"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Cashin:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="194" y="20" width="73" height="20" uuid="c39ca5fd-108f-44e4-8651-244d378a5141"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{bankaccount_cashin}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="267" y="20" width="53" height="20" uuid="76c095c3-5c49-434e-96b4-1cc4650fc285"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Cashout:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="319" y="20" width="42" height="20" uuid="643efe99-3cc9-49dd-b576-0b6ef34e830f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{bankaccount_cashout}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="361" y="20" width="97" height="20" uuid="53b02b20-9e4b-45e5-8340-0f4dedc1e468"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Prasent balance:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="459" y="20" width="97" height="20" uuid="68ea96bf-fb84-4617-88cd-97caf92ad149"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cashin}-$F{cashout}]]></textFieldExpression>
+			</textField>
+			<elementGroup>
+				<staticText>
+					<reportElement x="0" y="0" width="40" height="20" uuid="782f84b0-42ae-4b59-8f74-1833edae71cb"/>
+					<box leftPadding="0"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Bank:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="40" y="0" width="90" height="20" uuid="148f26a0-5fef-4024-8137-e2547a6f92ae"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{bankaccount_bank}]]></textFieldExpression>
+				</textField>
+			</elementGroup>
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" uuid="7192ca26-213c-489c-911f-d590b0a833f3"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="39" y="0" width="1" height="20" uuid="ca553865-9ad2-46c1-8f1a-66171f29225b"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="266" y="0" width="1" height="40" uuid="e2843521-dc21-4be1-958e-829bbc0ffd42"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="334" y="0" width="1" height="20" uuid="8b24b242-c1e6-423b-be3a-f3cee4973a0e"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="319" y="20" width="1" height="20" uuid="a5ec8d13-fe89-40bf-9c61-fa90004e81b6"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="361" y="20" width="1" height="20" uuid="325b0de0-c800-4d72-a28e-de3efc0ace84"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="458" y="20" width="1" height="20" uuid="74b7bf94-8ca7-408d-a037-f8a2cfe50290"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="85" y="20" width="1" height="20" uuid="1a222572-9b44-4263-b821-6a2cfbc24070"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="129" y="0" width="1" height="20" uuid="e68ea5d2-d383-4f95-82df-e9336bdda94b"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="148" y="21" width="1" height="20" uuid="b39988e1-f1c7-429c-a883-c29d76f37ec5"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="194" y="20" width="1" height="20" uuid="35917c6e-8a05-480b-a5c4-a458d5c15905"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="174" y="0" width="1" height="20" uuid="91b8c679-7478-4f92-85a5-fa3c498d5238"/>
+				<graphicElement>
+					<pen lineStyle="Dotted" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+		<band height="104">
+			<componentElement>
+				<reportElement key="table 1" style="table 1" x="0" y="0" width="556" height="104" uuid="dfe97f3e-7fff-408b-b006-82d8adab4990"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="accounthistory" uuid="e5c8280d-3f14-4767-955a-84b3a6a5d3d8">
+						<datasetParameter name="accNo">
+							<datasetParameterExpression><![CDATA[$F{accountno}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="41" uuid="0629c0e8-6fe0-4615-9ef7-9601ac5c6d2d">
+						<jr:columnHeader style="table 1_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="40" height="15" uuid="aefaad0c-0855-4150-883a-5a46010c7cdd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[SL No]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="40" height="30" uuid="5ccf5fa4-a71a-45b1-b7b2-81ab29762817"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="66" uuid="6dd8db8e-c14b-433c-b830-adf71cb70a47">
+						<jr:columnHeader style="table 1_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="65" height="13" uuid="f9d1edb5-a95f-41af-9a1d-9391f3b7ee22"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[InputDate]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="65" height="30" uuid="87dc2ac7-13fc-40ab-bce1-f15744c9db2a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{InputDate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="228" uuid="01d35ae1-5518-489f-a445-3022e15aa8cd">
+						<jr:columnHeader style="table 1_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="13" uuid="95187666-091f-4a0d-abdb-e72c8d56dde8"/>
+								<textElement verticalAlignment="Middle"/>
+								<text><![CDATA[Description]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="228" height="30" uuid="cff15e71-9b13-4fde-ba0d-714325ac5dd1"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{Description}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="88e9e6f9-d9c0-483d-b5ab-ce5c9130ea6e">
+						<jr:columnHeader style="table 1_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="13" uuid="a56d64d9-f9cd-42df-bf0a-0a6ab4b60bc8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Cash In]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="70" height="30" uuid="41b2ce82-0eba-421d-b865-45d089617cac"/>
+								<box rightPadding="3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{CashIn}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="ce8aeb3f-9fd2-4c40-a8b1-aff0847022a7">
+						<jr:columnHeader style="table 1_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="70" height="13" uuid="78d75979-f0f9-40ae-bbe7-0fe4dadfa628"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Cash Out]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="70" height="30" uuid="21c0bf11-9aa4-4194-b2ac-6c6bcbd358a7"/>
+								<box rightPadding="3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{CashOut}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="e7c19602-9731-4314-9aac-8b6445f964a6">
+						<jr:columnHeader style="table 1_CH" height="15" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="13" uuid="21a03e84-47a9-4d31-8a0b-4e535ca19f66"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Balance]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="30" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="80" height="30" uuid="7a76178d-36f3-4921-98be-d80f321e925b"/>
+								<box rightPadding="3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{AccBalance}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

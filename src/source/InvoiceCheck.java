@@ -1,0 +1,2021 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package source;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.HeadlessException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
+
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import static source.InvoicePharmacy.convertToIndianCurrency;
+import static source.PointOfSale.convertToIndianCurrency;
+
+/**
+ *
+ * @author adnan
+ */
+public class InvoiceCheck extends javax.swing.JInternalFrame {
+
+    Connection conn = null;
+    ResultSet rs = null;
+    PreparedStatement pst = null;
+    String cusId;
+    String currency;
+    String username = null;
+    String returnNo = null;
+    float bokreturnamount = 0;
+    float recieved = 0;
+    float balance = 0;
+    int printer;
+
+    /**
+     * Creates new form InvoiceCheck
+     *
+     * @throws java.io.IOException
+     * @throws java.io.FileNotFoundException
+     * @throws java.sql.SQLException
+     */
+    public InvoiceCheck() throws IOException, FileNotFoundException, SQLException {
+        initComponents();
+        conn = Java_Connect.conectrDB();
+        TableDesign();
+        CheckType();
+        recieptmsg();
+        jTabbedPane1.setEnabledAt(1, false);
+        jButton3.hide();
+        PrintReciept();
+        jButton3.hide();
+        jButton1.hide();
+    }
+
+    public InvoiceCheck(String table_click, String paymenttype) throws IOException, FileNotFoundException, SQLException {
+        initComponents();
+        conn = Java_Connect.conectrDB();
+        paymenttypeboxdetails.setSelectedItem(paymenttype);
+        viewData(table_click, paymenttype);
+        TableDesign();
+        recieptmsg();
+        jTabbedPane1.setEnabledAt(1, false);
+        jButton3.hide();
+        PrintReciept();
+        jButton3.hide();
+        jButton1.hide();
+        //  CheckType();
+
+    }
+
+    private void PrintReciept() throws SQLException {
+        try {
+            String sql = "Select printReciept,printer from saleconfig dfc where dfc.id=1";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+
+                printer = rs.getInt("printer");
+
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+
+        }
+    }
+
+    private void recieptmsg() {
+        try {
+            String sql = "Select cashinvoice,creditinvoice from recieptmsg  where id=1";
+            pst = conn.prepareStatement(sql);
+
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                String cashinvoiceprintslip = rs.getString("cashinvoice");
+
+                // creditinvoiceprintslip = rs.getString("creditinvoice");
+                //setLanguage();
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+
+        }
+
+    }
+
+    private void TableDesign() {
+        JTableHeader jtblheader = datatbl1.getTableHeader();
+        jtblheader.setBackground(Color.red);
+        jtblheader.setForeground(Color.BLACK);
+        jtblheader.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        ((DefaultTableCellRenderer) jtblheader.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+        datatbl1.setDefaultRenderer(Object.class, centerRenderer);
+    }
+
+    private void clear() {
+        customertext.setText(null);
+        Datetext.setText(null);
+        totalamounttext.setText(null);
+        totalVatText.setText(null);
+        netTotalText.setText(null);
+
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    private static final DecimalFormat df2 = new DecimalFormat("#.00");
+
+    private void CashInvoice() throws SQLException {
+        try {
+            String sql = "Select invoiceNo from cashsale ORDER BY id DESC";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            //tbl_employeeinfo.setModel(DbUtils.resultSetToTableModel(rs));
+            while (rs.next()) {
+
+                String name = rs.getString("invoiceNo");
+                itemnamesearch.addItem(name);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+
+        }
+    }
+
+    private void CreditInvoice() throws SQLException {
+        try {
+            String sql = "Select invoiceNo from sale ORDER BY id DESC";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            //tbl_employeeinfo.setModel(DbUtils.resultSetToTableModel(rs));
+            while (rs.next()) {
+
+                String name = rs.getString("invoiceNo");
+                itemnamesearch.addItem(name);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+
+        }
+    }
+
+    private void CheckType() throws SQLException {
+        itemnamesearch.removeAllItems();
+        itemnamesearch.addItem("Select");
+        if (paymenttypeboxdetails.getSelectedIndex() == 0) {
+            CashInvoice();
+        } else {
+            CreditInvoice();
+
+        }
+    }
+
+    private void viewData(String inv, String paymenttype) throws SQLException {
+        String invoiceNo = inv;
+        if ("Credit Invoice".equals(paymenttype)) {
+            paymenttypeboxdetails.setSelectedIndex(1);
+            CheckType();
+            try {
+                DefaultTableModel model2 = (DefaultTableModel) datatbl1.getModel();
+                model2.setRowCount(0);
+                int tree = 0;
+                String sql = "Select "
+                        + "prcode,"
+                        + "itemformat as 'Item',"
+                        + "(select ite.generic_id from item ite where ite.Itemcode=sl.prcode ) as 'genericid',"
+                        + "sl.batch as 'batch',"
+                        + "sl.expdate as 'expdate',"
+                        + "sl.boxsize as 'boxsize',"
+                        + "Cast(sl.unitrate as decimal(10,2)) as 'UnitRate',"
+                        + "Cast(sl.tp as decimal(10,2)) as 'tp',"
+                        + "sl.qty as 'Qty',"
+                        + "sl.bonusqty as 'bonusqty',"
+                        + "sl.unit as 'Unit',"
+                        + "Cast(sl.discount as decimal(10,2)) as 'Discount',"
+                        + "Cast(sl.vat as decimal(10,2)) as 'Vat',"
+                        + "Cast(sl.totalamount as decimal(10,2)) as 'Amount',"
+                        + "Cast(sl.Totalvat as decimal(10,2)) as 'TotalVat',"
+                        + "Cast(sl.totaldiscount as decimal(10,2)) as 'Totaldiscount',"
+                        + "Cast(sl.NetTotal as decimal(10,2))  as 'NetTotal'"
+                        + "  from saledetails sl where sl.invoiceNo='" + invoiceNo + "'";
+                pst = conn.prepareStatement(sql);
+
+                rs = pst.executeQuery();
+                //   datatbl1.setModel(DbUtils.resultSetToTableModel(rs));
+                while (rs.next()) {
+                    String prcode = rs.getString("prcode");
+                    String Item = rs.getString("Item");
+                    String genericid = rs.getString("genericid");
+                    String batch = rs.getString("batch");
+                    String expdate = rs.getString("expdate");
+                    String boxsize = rs.getString("boxsize");
+                    String UnitRate = rs.getString("UnitRate");
+                    String tp = rs.getString("tp");
+                    float Qty = rs.getFloat("Qty");
+                    float bonusqty = rs.getFloat("bonusqty");
+                    String Unit = rs.getString("Unit");
+                    String Discount = rs.getString("Discount");
+                    String Vat = rs.getString("Vat");
+                    String Amount = rs.getString("Amount");
+                    String Totaldiscount = rs.getString("Totaldiscount");
+                    String TotalVat = rs.getString("TotalVat");
+                    String NetTotal = rs.getString("NetTotal");
+                    //   String GenericName = getGeneric(genericid);
+                    tree++;
+                    model2.addRow(new Object[]{tree, prcode, Item, batch, expdate, boxsize, tp, UnitRate, Qty, bonusqty, Discount, Vat, Unit, Amount, Totaldiscount, TotalVat, NetTotal});
+
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+
+            }
+            try {
+                String sql = "Select "
+                        + "invoiceNo,"
+                        + "invoicedate,"
+                        + "paymentType,"
+                        + "paymentCurency,"
+                        + "TotalAmount,"
+                        + "TotalVat,"
+                        + "netdiscount,"
+                        + "Totalinvoice,"
+                        + "ReturnBookAmount,"
+                        + "recieved,"
+                        + "due,"
+                        + "rounding,"
+                        + "payble,"
+                        + "customerid,"
+                        + "(select ci.customername from customerInfo ci where ci.customerid=sl.customerid ) as 'customername',"
+                        + "(select name from admin ad where ad.id=sl.inputuserid) as 'user' "
+                        + "from sale sl  where sl.invoiceNo='" + invoiceNo + "'";
+                pst = conn.prepareStatement(sql);
+
+                rs = pst.executeQuery();
+                if (rs.next()) {
+
+                    String Id = rs.getString("invoiceNo");
+                    itemnamesearch.setSelectedItem(Id);
+                    String date = rs.getString("invoicedate");
+                    Datetext.setText(date);
+                    currency = rs.getString("paymentCurency");
+                    String totalam = rs.getString("TotalAmount");
+                    totalamounttext.setText(totalam);
+                    String discount = rs.getString("netdiscount");
+                    discounttext.setText(discount);
+                    String tovat = rs.getString("TotalVat");
+                    totalVatText.setText(tovat);
+                    double netinoice = rs.getDouble("Totalinvoice");
+                    netTotalText.setText(df2.format(netinoice));
+                    cusId = rs.getString("customerid");
+                    String customername = rs.getString("customername");
+                    customertext.setText(customername);
+                    username = rs.getString("user");
+                    String returnamt = rs.getString("ReturnBookAmount");
+                    returnamttext.setText(returnamt);
+                    String recieved = rs.getString("recieved");
+                    recievedtext.setText(recieved);
+                    String due = rs.getString("due");
+                    duetext.setText(due);
+                    String rounding = rs.getString("rounding");
+                    roundingtext.setText(rounding);
+                    String payble = rs.getString("payble");
+                    paybleamttext.setText(payble);
+                    bokreturnamount = rs.getFloat("ReturnBookAmount");
+                    if (bokreturnamount > 0) {
+                        jTabbedPane1.setEnabledAt(1, true);
+                        GetReturnNo(invoiceNo);
+                        jButton3.show();
+                    } else {
+                        DefaultTableModel model2 = (DefaultTableModel) returntable.getModel();
+                        model2.setRowCount(0);
+                        jTabbedPane1.setSelectedIndex(0);
+                        jTabbedPane1.setEnabledAt(1, false);
+                        jButton3.hide();
+                    }
+
+                } else {
+                    clear();
+
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+
+            }
+
+        } else {
+            //Cash Invoice
+            paymenttypeboxdetails.setSelectedIndex(0);
+            CheckType();
+            try {
+                DefaultTableModel model2 = (DefaultTableModel) datatbl1.getModel();
+                model2.setRowCount(0);
+                int tree = 0;
+                String sql = "Select "
+                        + "prcode,"
+                        + "itemformat as 'Item',"
+                        + "(select ite.generic_id from item ite where ite.Itemcode=sl.prcode ) as 'genericid',"
+                        + "sl.batch as 'batch',"
+                        + "sl.expdate as 'expdate',"
+                        + "sl.boxsize as 'boxsize',"
+                        + "Cast(sl.unitrate as decimal(10,2)) as 'UnitRate',"
+                        + "Cast(sl.tp as decimal(10,2)) as 'tp',"
+                        + "sl.qty as 'Qty',"
+                        + "sl.bonusqty as 'bonusqty',"
+                        + "sl.unit as 'Unit',"
+                        + "Cast(sl.discount as decimal(10,2)) as 'Discount',"
+                        + "Cast(sl.vat as decimal(10,2)) as 'Vat',"
+                        + "Cast(sl.totalamount as decimal(10,2)) as 'Amount',"
+                        + "Cast(sl.Totalvat as decimal(10,2)) as 'TotalVat',"
+                        + "Cast(sl.totaldiscount as decimal(10,2)) as 'Totaldiscount',"
+                        + "Cast(sl.NetTotal as decimal(10,2))  as 'NetTotal'"
+                        + "  from cashsaledetails sl where sl.invoiceNo='" + invoiceNo + "'";
+                pst = conn.prepareStatement(sql);
+
+                rs = pst.executeQuery();
+                //   datatbl1.setModel(DbUtils.resultSetToTableModel(rs));
+                while (rs.next()) {
+                    String prcode = rs.getString("prcode");
+                    String Item = rs.getString("Item");
+                    String genericid = rs.getString("genericid");
+                    String batch = rs.getString("batch");
+                    String expdate = rs.getString("expdate");
+                    String boxsize = rs.getString("boxsize");
+                    String UnitRate = rs.getString("UnitRate");
+                    String tp = rs.getString("tp");
+                    float Qty = rs.getFloat("Qty");
+                    float bonusqty = rs.getFloat("bonusqty");
+                    String Unit = rs.getString("Unit");
+                    String Discount = rs.getString("Discount");
+                    String Vat = rs.getString("Vat");
+                    String Amount = rs.getString("Amount");
+                    String Totaldiscount = rs.getString("Totaldiscount");
+                    String TotalVat = rs.getString("TotalVat");
+                    String NetTotal = rs.getString("NetTotal");
+                    //   String GenericName = getGeneric(genericid);
+                    tree++;
+                    model2.addRow(new Object[]{tree, prcode, Item, batch, expdate, boxsize, tp, UnitRate, Qty, bonusqty, Discount, Vat, Unit, Amount, Totaldiscount, TotalVat, NetTotal});
+
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+
+            }
+            try {
+                String sql = "Select "
+                        + "invoiceNo,"
+                        + "invoicedate,"
+                        + "paymentType,"
+                        + "paymentCurency,"
+                        + "TotalAmount,"
+                        + "TotalVat,"
+                        + "netdiscount,"
+                        + "Totalinvoice,"
+                        + "ReturnBookAmount,"
+                        + "nettotal,"
+                        + "rounding,"
+                        + "customerid,"
+                        + "(select ci.customername from customerInfo ci where ci.customerid=sl.customerid ) as 'customername',"
+                        + "(select name from admin ad where ad.id=sl.inputuserid) as 'user' "
+                        + "from cashsale sl  where sl.invoiceNo='" + invoiceNo + "'";
+                pst = conn.prepareStatement(sql);
+
+                rs = pst.executeQuery();
+                if (rs.next()) {
+
+                    String Id = rs.getString("invoiceNo");
+                    itemnamesearch.setSelectedItem(Id);
+                    String date = rs.getString("invoicedate");
+                    Datetext.setText(date);
+                    currency = rs.getString("paymentCurency");
+                    String totalam = rs.getString("TotalAmount");
+                    totalamounttext.setText(totalam);
+                    String discount = rs.getString("netdiscount");
+                    discounttext.setText(discount);
+                    String tovat = rs.getString("TotalVat");
+                    totalVatText.setText(tovat);
+                    double netinoice = rs.getDouble("Totalinvoice");
+                    netTotalText.setText(df2.format(netinoice));
+                    cusId = rs.getString("customerid");
+                    String customername = rs.getString("customername");
+                    customertext.setText(customername);
+                    username = rs.getString("user");
+                    String returnamt = rs.getString("ReturnBookAmount");
+                    returnamttext.setText(returnamt);
+                    String recieved = rs.getString("nettotal");
+                    recievedtext.setText(recieved);
+
+                    duetext.setText("0.00");
+                    String rounding = rs.getString("rounding");
+                    roundingtext.setText(rounding);
+                    String payble = rs.getString("nettotal");
+                    paybleamttext.setText(payble);
+                    bokreturnamount = rs.getFloat("ReturnBookAmount");
+                    if (bokreturnamount > 0) {
+                        jTabbedPane1.setEnabledAt(1, true);
+                        GetReturnNo(invoiceNo);
+                        jButton3.show();
+                    } else {
+                        DefaultTableModel model2 = (DefaultTableModel) returntable.getModel();
+                        model2.setRowCount(0);
+                        jTabbedPane1.setSelectedIndex(0);
+                        jTabbedPane1.setEnabledAt(1, false);
+                        jButton3.hide();
+                    }
+
+                } else {
+                    clear();
+
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e);
+
+            }
+
+        }
+
+    }
+
+    private void GetReturnNo(String inv) {
+        try {
+            String sql = "Select ReturnNo from salereturn where invoiceNo='" + inv + "'";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                returnNo = rs.getString("ReturnNo");
+                ReturnDetails(returnNo);
+            }
+        } catch (SQLException e) {
+
+        }
+
+    }
+
+    private void ReturnDetails(String returnNo) {
+        try {
+            DefaultTableModel model2 = (DefaultTableModel) returntable.getModel();
+            model2.setRowCount(0);
+            int tree = 0;
+            String sql = "Select "
+                    + "prcode,"
+                    + "(select ite.itemName from item ite where ite.Itemcode=sl.prcode ) as 'Item',"
+                    + "(select ite.generic_id from item ite where ite.Itemcode=sl.prcode ) as 'genericid',"
+                    + "sl.batch as 'batch',"
+                    + "sl.expdate as 'expdate',"
+                    + "sl.boxsize as 'boxsize',"
+                    + "Cast(sl.unitrate as decimal(10,2)) as 'UnitRate',"
+                    + "sl.qty as 'Qty',"
+                    + "sl.unit as 'Unit',"
+                    + "Cast(sl.discount as decimal(10,2)) as 'Discount',"
+                    + "Cast(sl.vat as decimal(10,2)) as 'Vat',"
+                    + "Cast(sl.totalamount as decimal(10,2)) as 'Amount',"
+                    + "Cast(sl.Totalvat as decimal(10,2)) as 'TotalVat',"
+                    + "Cast(sl.totaldiscount as decimal(10,2)) as 'Totaldiscount',"
+                    + "Cast(sl.NetTotal as decimal(10,2))  as 'NetTotal'"
+                    + "  from salereturndetails sl where sl.returnNo='" + returnNo + "'";
+            pst = conn.prepareStatement(sql);
+
+            rs = pst.executeQuery();
+            //   datatbl1.setModel(DbUtils.resultSetToTableModel(rs));
+            while (rs.next()) {
+                String prcode = rs.getString("prcode");
+                String Item = rs.getString("Item");
+                String genericid = rs.getString("genericid");
+                String batch = rs.getString("batch");
+                String expdate = rs.getString("expdate");
+                String boxsize = rs.getString("boxsize");
+                String UnitRate = rs.getString("UnitRate");
+
+                float Qty = rs.getFloat("Qty");
+
+                String Unit = rs.getString("Unit");
+                String Discount = rs.getString("Discount");
+                String Vat = rs.getString("Vat");
+                String Amount = rs.getString("Amount");
+                String Totaldiscount = rs.getString("Totaldiscount");
+                String TotalVat = rs.getString("TotalVat");
+                String NetTotal = rs.getString("NetTotal");
+                //   String GenericName = getGeneric(genericid);
+                tree++;
+                model2.addRow(new Object[]{tree, prcode, Item, batch, expdate, boxsize, UnitRate, Qty, Unit, Discount, Vat, Amount, Totaldiscount, TotalVat, NetTotal});
+
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+
+        }
+
+    }
+
+    private String getGeneric(String genericid) throws SQLException {
+        String name = null;
+        try {
+            String sql = "Select generic_name from generic where generic_id='" + genericid + "'";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            //tbl_employeeinfo.setModel(DbUtils.resultSetToTableModel(rs));
+            if (rs.next()) {
+
+                name = rs.getString("generic_name");
+
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+
+        }
+        return name;
+    }
+
+    private void Serach1() throws SQLException {
+
+        String invoiceNo = (String) itemnamesearch.getSelectedItem();
+        switch (paymenttypeboxdetails.getSelectedIndex()) {
+            case 0:
+                try {
+                    DefaultTableModel model2 = (DefaultTableModel) datatbl1.getModel();
+                    model2.setRowCount(0);
+                    int tree = 0;
+                    String sql = "Select "
+                            + "prcode,"
+                            + "itemformat as 'Item',"
+                            + "sl.generic as 'generic',"
+                            + "sl.batch as 'batch',"
+                            + "sl.expdate as 'expdate',"
+                            + "sl.boxsize as 'boxsize',"
+                            + "Cast(sl.unitrate as decimal(10,2)) as 'UnitRate',"
+                            + "Cast(sl.tp as decimal(10,2)) as 'tp',"
+                            + "sl.qty as 'Qty',"
+                            + "sl.bonusqty as 'bonusqty',"
+                            + "sl.unit as 'Unit',"
+                            + "Cast(sl.discount as decimal(10,2)) as 'Discount',"
+                            + "Cast(sl.vat as decimal(10,2)) as 'Vat',"
+                            + "Cast(sl.totalamount as decimal(10,2)) as 'Amount',"
+                            + "Cast(sl.Totalvat as decimal(10,2)) as 'TotalVat',"
+                            + "Cast(sl.totaldiscount as decimal(10,2)) as 'Totaldiscount',"
+                            + "Cast(sl.NetTotal as decimal(10,2))  as 'NetTotal'"
+                            + "from cashsaledetails sl where sl.invoiceNo='" + invoiceNo + "'";
+                    pst = conn.prepareStatement(sql);
+                    rs = pst.executeQuery();
+                    while (rs.next()) {
+                        String prcode = rs.getString("prcode");
+                        String Item = rs.getString("Item");
+                        String generic = rs.getString("generic");
+                        String batch = rs.getString("batch");
+                        String expdate = rs.getString("expdate");
+                        String boxsize = rs.getString("boxsize");
+                        String UnitRate = rs.getString("UnitRate");
+
+                        String tp = rs.getString("tp");
+                        float Qty = rs.getFloat("Qty");
+                        float bonusqty = rs.getFloat("bonusqty");
+                        String Unit = rs.getString("Unit");
+                        String Discount = rs.getString("Discount");
+                        String Vat = rs.getString("Vat");
+
+                        String Amount = rs.getString("Amount");
+                        String Totaldiscount = rs.getString("Totaldiscount");
+                        String TotalVat = rs.getString("TotalVat");
+                        String NetTotal = rs.getString("NetTotal");
+                        //  String GenericName = getGeneric(genericid);
+                        tree++;
+                        model2.addRow(new Object[]{tree, prcode, Item, batch, expdate, boxsize, tp, UnitRate, Qty, bonusqty, Discount, Vat, Unit, Amount, Totaldiscount, TotalVat, NetTotal});
+                    }
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
+                try {
+                    String sql = "Select "
+                            + "invoiceNo,"
+                            + "customerid,"
+                            + "invoicedate,"
+                            + "paymentType,"
+                            + "paymentCurency,"
+                            + "TotalAmount,"
+                            + "TotalVat,"
+                            + "netdiscount,"
+                            + "Totalinvoice,"
+                            + "ReturnBookAmount,"
+                            + "rounding,"
+                            + "nettotal,"
+                            + "recieved,"
+                            + "changeamt,"
+                            + "(select ci.customername from customerInfo ci where ci.customerid=sl.customerid ) as 'customername',"
+                            + "(select name from admin ad where ad.id=sl.inputuserid) as 'user' "
+                            + "from cashsale sl  where sl.invoiceNo='" + invoiceNo + "'";
+                    pst = conn.prepareStatement(sql);
+                    rs = pst.executeQuery();
+                    if (rs.next()) {
+
+                        String Id = rs.getString("invoiceNo");
+                        itemnamesearch.setSelectedItem(Id);
+                        String date = rs.getString("invoicedate");
+                        Datetext.setText(date);
+                        currency = rs.getString("paymentCurency");
+                        String totalam = rs.getString("TotalAmount");
+                        totalamounttext.setText(totalam);
+                        String discount = rs.getString("netdiscount");
+                        discounttext.setText(discount);
+                        String tovat = rs.getString("TotalVat");
+                        totalVatText.setText(tovat);
+                        double netinoice = rs.getDouble("Totalinvoice");
+                        netTotalText.setText(df2.format(netinoice));
+                        cusId = rs.getString("customerid");
+                        String customername = rs.getString("customername");
+                        customertext.setText(customername);
+                        username = rs.getString("user");
+                        String returnamt = rs.getString("ReturnBookAmount");
+                        returnamttext.setText(returnamt);
+                        String recieveds = rs.getString("nettotal");
+                        recievedtext.setText(recieveds);
+                        duetext.setText("0.00");
+                        String rounding = rs.getString("rounding");
+                        roundingtext.setText(rounding);
+                        String payble = rs.getString("nettotal");
+                        paybleamttext.setText(payble);
+                        recieved = rs.getFloat("recieved");
+                        balance = rs.getFloat("changeamt");
+                        bokreturnamount = rs.getFloat("ReturnBookAmount");
+                        if (bokreturnamount > 0) {
+                            jTabbedPane1.setEnabledAt(1, true);
+                            GetReturnNo(invoiceNo);
+                            jButton3.show();
+                        } else {
+                            DefaultTableModel model2 = (DefaultTableModel) returntable.getModel();
+                            model2.setRowCount(0);
+                            jTabbedPane1.setSelectedIndex(0);
+                            jTabbedPane1.setEnabledAt(1, false);
+                            jButton3.hide();
+                        }
+                        //   currency=rs.getString("paymentCurency");
+                    } else {
+                        clear();
+
+                    }
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e);
+
+                }
+                break;
+
+            case 1:
+                try {
+                    DefaultTableModel model2 = (DefaultTableModel) datatbl1.getModel();
+                    model2.setRowCount(0);
+                    int tree = 0;
+                    String sql = "Select "
+                            + "prcode,"
+                            + "itemformat as 'Item',"
+                            + "sl.generic as 'generic',"
+                            + "sl.batch as 'batch',"
+                            + "sl.expdate as 'expdate',"
+                            + "sl.boxsize as 'boxsize',"
+                            + "Cast(sl.unitrate as decimal(10,2)) as 'UnitRate',"
+                            + "Cast(sl.tp as decimal(10,2)) as 'tp',"
+                            + "sl.qty as 'Qty',"
+                            + "sl.bonusqty as 'bonusqty',"
+                            + "sl.unit as 'Unit',"
+                            + "Cast(sl.discount as decimal(10,2)) as 'Discount',"
+                            + "Cast(sl.vat as decimal(10,2)) as 'Vat',"
+                            + "Cast(sl.totalamount as decimal(10,2)) as 'Amount',"
+                            + "Cast(sl.Totalvat as decimal(10,2)) as 'TotalVat',"
+                            + "Cast(sl.totaldiscount as decimal(10,2)) as 'Totaldiscount',"
+                            + "Cast(sl.NetTotal as decimal(10,2))  as 'NetTotal'"
+                            + "from saledetails sl where sl.invoiceNo='" + invoiceNo + "'";
+                    pst = conn.prepareStatement(sql);
+                    rs = pst.executeQuery();
+                    while (rs.next()) {
+                        String prcode = rs.getString("prcode");
+                        String Item = rs.getString("Item");
+                        String generic = rs.getString("generic");
+                        String batch = rs.getString("batch");
+                        String expdate = rs.getString("expdate");
+                        String boxsize = rs.getString("boxsize");
+                        String UnitRate = rs.getString("UnitRate");
+
+                        String tp = rs.getString("tp");
+                        float Qty = rs.getFloat("Qty");
+                        float bonusqty = rs.getFloat("bonusqty");
+                        String Unit = rs.getString("Unit");
+                        String Discount = rs.getString("Discount");
+                        String Vat = rs.getString("Vat");
+
+                        String Amount = rs.getString("Amount");
+                        String Totaldiscount = rs.getString("Totaldiscount");
+                        String TotalVat = rs.getString("TotalVat");
+                        String NetTotal = rs.getString("NetTotal");
+                        //  String GenericName = getGeneric(genericid);
+                        tree++;
+                        model2.addRow(new Object[]{tree, prcode, Item, batch, expdate, boxsize, tp, UnitRate, Qty, bonusqty, Discount, Vat, Unit, Amount, Totaldiscount, TotalVat, NetTotal});
+
+                    }
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e);
+
+                }
+                try {
+                    String sql = "Select "
+                            + "invoiceNo,"
+                            + "invoicedate,"
+                            + "paymentType,"
+                            + "paymentCurency,"
+                            + "TotalAmount,"
+                            + "TotalVat,"
+                            + "netdiscount,"
+                            + "Totalinvoice,"
+                            + "ReturnBookAmount,"
+                            + "recieved,"
+                            + "due,"
+                            + "rounding,"
+                            + "payble,"
+                            + "customerid,"
+                            + "(select ci.customername from customerInfo ci where ci.customerid=sl.customerid ) as 'customername',"
+                            + "(select name from admin ad where ad.id=sl.inputuserid) as 'user' "
+                            + "from sale sl  where sl.invoiceNo='" + invoiceNo + "'";
+                    pst = conn.prepareStatement(sql);
+                    rs = pst.executeQuery();
+                    if (rs.next()) {
+
+                        String Id = rs.getString("invoiceNo");
+                        itemnamesearch.setSelectedItem(Id);
+                        String date = rs.getString("invoicedate");
+                        Datetext.setText(date);
+                        currency = rs.getString("paymentCurency");
+                        String totalam = rs.getString("TotalAmount");
+                        totalamounttext.setText(totalam);
+                        String discount = rs.getString("netdiscount");
+                        discounttext.setText(discount);
+                        String tovat = rs.getString("TotalVat");
+                        totalVatText.setText(tovat);
+                        double netinoice = rs.getDouble("Totalinvoice");
+                        netTotalText.setText(df2.format(netinoice));
+                        cusId = rs.getString("customerid");
+                        String customername = rs.getString("customername");
+                        customertext.setText(customername);
+                        username = rs.getString("user");
+                        String returnamt = rs.getString("ReturnBookAmount");
+                        returnamttext.setText(returnamt);
+                        String recieved = rs.getString("recieved");
+                        recievedtext.setText(recieved);
+                        String due = rs.getString("due");
+                        duetext.setText(due);
+                        String rounding = rs.getString("rounding");
+                        roundingtext.setText(rounding);
+                        String payble = rs.getString("payble");
+                        paybleamttext.setText(payble);
+                        bokreturnamount = rs.getFloat("ReturnBookAmount");
+                        if (bokreturnamount > 0) {
+                            jTabbedPane1.setEnabledAt(1, true);
+                            GetReturnNo(invoiceNo);
+                            jButton3.show();
+                        } else {
+                            DefaultTableModel model2 = (DefaultTableModel) returntable.getModel();
+                            model2.setRowCount(0);
+                            jTabbedPane1.setSelectedIndex(0);
+                            jTabbedPane1.setEnabledAt(1, false);
+                            jButton3.hide();
+                        }
+                        //   currency=rs.getString("paymentCurency");
+                    } else {
+                        clear();
+
+                    }
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, e);
+
+                }
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel5 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        paymenttypeboxdetails = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        Datetext = new javax.swing.JTextField();
+        itemnamesearch = new javax.swing.JComboBox<>();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel22 = new javax.swing.JLabel();
+        totalVatText = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        totalamounttext = new javax.swing.JTextField();
+        netTotalText = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        discounttext = new javax.swing.JTextField();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel26 = new javax.swing.JLabel();
+        roundingtext = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
+        returnamttext = new javax.swing.JTextField();
+        recievedtext = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        paybleamttext = new javax.swing.JTextField();
+        jLabel29 = new javax.swing.JLabel();
+        duetext = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        customertext = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        datatbl1 = new javax.swing.JTable();
+        jPanel10 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        returntable = new javax.swing.JTable();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Invoice Check");
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/source/company.png"))); // NOI18N
+
+        jPanel5.setBackground(new java.awt.Color(67, 86, 86));
+
+        jPanel1.setBackground(new java.awt.Color(67, 86, 86));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        paymenttypeboxdetails.setBackground(new java.awt.Color(255, 255, 255));
+        paymenttypeboxdetails.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cash Invoice", "Credit Invoice" }));
+        paymenttypeboxdetails.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                paymenttypeboxdetailsPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Invoice No:");
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Invoice Type");
+
+        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("Invoice Date:");
+
+        Datetext.setEditable(false);
+        Datetext.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        Datetext.setBorder(null);
+        Datetext.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+
+        itemnamesearch.setBackground(new java.awt.Color(255, 255, 255));
+        itemnamesearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select" }));
+        itemnamesearch.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                itemnamesearchPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                itemnamesearchPopupMenuWillBecomeVisible(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(paymenttypeboxdetails, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(itemnamesearch, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(Datetext, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(itemnamesearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Datetext, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(paymenttypeboxdetails, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(5, 5, 5))
+        );
+
+        jPanel2.setBackground(new java.awt.Color(67, 86, 86));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setText("Total Invoice:");
+
+        totalVatText.setEditable(false);
+        totalVatText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        totalVatText.setForeground(new java.awt.Color(153, 0, 0));
+        totalVatText.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        totalVatText.setBorder(null);
+        totalVatText.setDisabledTextColor(new java.awt.Color(204, 0, 0));
+
+        jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setText("Total Vat:");
+
+        totalamounttext.setEditable(false);
+        totalamounttext.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        totalamounttext.setForeground(new java.awt.Color(153, 0, 0));
+        totalamounttext.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        totalamounttext.setBorder(null);
+        totalamounttext.setDisabledTextColor(new java.awt.Color(204, 0, 0));
+
+        netTotalText.setEditable(false);
+        netTotalText.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        netTotalText.setForeground(new java.awt.Color(153, 0, 0));
+        netTotalText.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        netTotalText.setBorder(null);
+        netTotalText.setDisabledTextColor(new java.awt.Color(204, 0, 0));
+
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setText("Invoice Amount:");
+
+        jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel30.setText("Discount:");
+
+        discounttext.setEditable(false);
+        discounttext.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        discounttext.setForeground(new java.awt.Color(153, 0, 0));
+        discounttext.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        discounttext.setBorder(null);
+        discounttext.setDisabledTextColor(new java.awt.Color(204, 0, 0));
+
+        jPanel6.setBackground(new java.awt.Color(67, 86, 86));
+        jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel26.setText("Recieved");
+
+        roundingtext.setEditable(false);
+        roundingtext.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        roundingtext.setForeground(new java.awt.Color(153, 0, 0));
+        roundingtext.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        roundingtext.setBorder(null);
+        roundingtext.setDisabledTextColor(new java.awt.Color(204, 0, 0));
+
+        jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel27.setText("Rounding");
+
+        returnamttext.setEditable(false);
+        returnamttext.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        returnamttext.setForeground(new java.awt.Color(153, 0, 0));
+        returnamttext.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        returnamttext.setBorder(null);
+        returnamttext.setDisabledTextColor(new java.awt.Color(204, 0, 0));
+
+        recievedtext.setEditable(false);
+        recievedtext.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        recievedtext.setForeground(new java.awt.Color(153, 0, 0));
+        recievedtext.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        recievedtext.setBorder(null);
+        recievedtext.setDisabledTextColor(new java.awt.Color(204, 0, 0));
+
+        jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setText("Return Amount");
+
+        jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel32.setText("Payble Amount");
+
+        paybleamttext.setEditable(false);
+        paybleamttext.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        paybleamttext.setForeground(new java.awt.Color(153, 0, 0));
+        paybleamttext.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        paybleamttext.setBorder(null);
+        paybleamttext.setDisabledTextColor(new java.awt.Color(204, 0, 0));
+
+        jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel29.setText("Due");
+
+        duetext.setEditable(false);
+        duetext.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        duetext.setForeground(new java.awt.Color(153, 0, 0));
+        duetext.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        duetext.setBorder(null);
+        duetext.setDisabledTextColor(new java.awt.Color(204, 0, 0));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel28, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel32, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(returnamttext, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(roundingtext, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(paybleamttext, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(recievedtext, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(duetext, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(returnamttext, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(roundingtext, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(paybleamttext, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(recievedtext, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(duetext, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel30, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(totalamounttext, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(totalVatText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(discounttext, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(netTotalText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(totalamounttext, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalVatText, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(discounttext, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(netTotalText, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBackground(new java.awt.Color(67, 86, 86));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        customertext.setEditable(false);
+        customertext.setBorder(null);
+        customertext.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Customer Name");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(customertext, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(customertext, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jButton2.setBackground(new java.awt.Color(0, 102, 102));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Invoice Print");
+        jButton2.setBorder(null);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setBackground(new java.awt.Color(153, 0, 0));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Return Print");
+        jButton3.setBorder(null);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Stock Minus");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
+        );
+
+        jScrollPane1.setRequestFocusEnabled(false);
+
+        datatbl1.setAutoCreateRowSorter(true);
+        datatbl1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        datatbl1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "SI No", "Item Code", "Description", "Bacth", "Exp Date", "Box Size", "TP", "MRP", "Qty", "Bonus Qty", "Unit", "Discount", "Vat", "Amount", "Total Discount", "Total Vat", "Net Total"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        datatbl1.setGridColor(new java.awt.Color(204, 204, 204));
+        datatbl1.setRowHeight(25);
+        datatbl1.setShowHorizontalLines(true);
+        datatbl1.setShowVerticalLines(true);
+        jScrollPane1.setViewportView(datatbl1);
+        if (datatbl1.getColumnModel().getColumnCount() > 0) {
+            datatbl1.getColumnModel().getColumn(0).setResizable(false);
+            datatbl1.getColumnModel().getColumn(0).setPreferredWidth(30);
+            datatbl1.getColumnModel().getColumn(1).setResizable(false);
+            datatbl1.getColumnModel().getColumn(2).setResizable(false);
+            datatbl1.getColumnModel().getColumn(2).setPreferredWidth(200);
+            datatbl1.getColumnModel().getColumn(3).setResizable(false);
+            datatbl1.getColumnModel().getColumn(4).setResizable(false);
+            datatbl1.getColumnModel().getColumn(5).setResizable(false);
+            datatbl1.getColumnModel().getColumn(6).setResizable(false);
+            datatbl1.getColumnModel().getColumn(7).setResizable(false);
+            datatbl1.getColumnModel().getColumn(8).setResizable(false);
+            datatbl1.getColumnModel().getColumn(9).setResizable(false);
+            datatbl1.getColumnModel().getColumn(10).setResizable(false);
+            datatbl1.getColumnModel().getColumn(11).setResizable(false);
+            datatbl1.getColumnModel().getColumn(12).setResizable(false);
+            datatbl1.getColumnModel().getColumn(13).setResizable(false);
+            datatbl1.getColumnModel().getColumn(14).setResizable(false);
+            datatbl1.getColumnModel().getColumn(15).setResizable(false);
+            datatbl1.getColumnModel().getColumn(16).setResizable(false);
+        }
+
+        jTabbedPane1.addTab("Sale Details", jScrollPane1);
+
+        returntable.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        returntable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "SI No", "Item Code", "Description", "Bacth", "Exp Date", "MRP", "Qty", "Unit", "Discount", "Vat", "Amount", "Total Discount", "Total Vat", "Net Total"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        returntable.setGridColor(new java.awt.Color(204, 204, 204));
+        returntable.setRowHeight(25);
+        returntable.setShowHorizontalLines(true);
+        returntable.setShowVerticalLines(true);
+        jScrollPane2.setViewportView(returntable);
+        if (returntable.getColumnModel().getColumnCount() > 0) {
+            returntable.getColumnModel().getColumn(0).setResizable(false);
+            returntable.getColumnModel().getColumn(0).setPreferredWidth(30);
+            returntable.getColumnModel().getColumn(1).setResizable(false);
+            returntable.getColumnModel().getColumn(2).setResizable(false);
+            returntable.getColumnModel().getColumn(2).setPreferredWidth(200);
+            returntable.getColumnModel().getColumn(3).setResizable(false);
+            returntable.getColumnModel().getColumn(4).setResizable(false);
+            returntable.getColumnModel().getColumn(5).setResizable(false);
+            returntable.getColumnModel().getColumn(6).setResizable(false);
+            returntable.getColumnModel().getColumn(7).setResizable(false);
+            returntable.getColumnModel().getColumn(8).setResizable(false);
+            returntable.getColumnModel().getColumn(9).setResizable(false);
+            returntable.getColumnModel().getColumn(10).setResizable(false);
+            returntable.getColumnModel().getColumn(11).setResizable(false);
+            returntable.getColumnModel().getColumn(12).setResizable(false);
+            returntable.getColumnModel().getColumn(13).setResizable(false);
+        }
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1583, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+
+        jScrollPane3.setViewportView(jPanel4);
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1501, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
+        );
+
+        jTabbedPane1.addTab("Return Details", jPanel10);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE))
+        );
+
+        setBounds(5, 10, 1513, 568);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        if (itemnamesearch.getSelectedIndex() == 0) {
+
+        } else {
+            String nettotal = paybleamttext.getText();
+            if (paymenttypeboxdetails.getSelectedIndex() == 0) {
+
+                if (printer == 1) {
+                    //Normal
+                    try {
+                        String num = nettotal;
+                        String inwords = convertToIndianCurrency(num);
+                        // String arebic = convertNumberToArabicWords(num);
+                        // String convert = arebic;
+                        JasperDesign jd = JRXmlLoader.load(new File("")
+                                .getAbsolutePath()
+                                + "/src/Report/Invoice.jrxml");
+                        //    JasperDesign jd = JRXmlLoader.load("C:\\Users\\adnan\\Documents\\NetBeansProjects\\MobileInvoice\\src\\Riport\\voiceriport.jrxml");
+                        HashMap para = new HashMap();
+                        para.put("invoiceno", itemnamesearch.getSelectedItem());
+                        para.put("inwords", inwords);
+                        JasperReport jr = JasperCompileManager.compileReport(jd);
+                        JasperPrint jp = JasperFillManager.fillReport(jr, para, conn);
+                        //  JasperPrintManager.printReport(jp, true);
+                        JasperViewer.viewReport(jp, false);
+
+                    } catch (NumberFormatException | JRException ex) {
+                        JOptionPane.showMessageDialog(null, ex);
+
+                    }
+                } else {
+
+                    try {
+                        JasperDesign jd = JRXmlLoader.load(new File("")
+                                .getAbsolutePath()
+                                + "/src/Report/BilReciept.jrxml");
+                        HashMap para = new HashMap();
+                        para.put("invoiceno", itemnamesearch.getSelectedItem());
+                        JasperReport jr = JasperCompileManager.compileReport(jd);
+                        JasperPrint jp = JasperFillManager.fillReport(jr, para, conn);
+                        //JasperPrintManager.printReport(jp, true);
+                        JasperViewer.viewReport(jp, false);
+
+                    } catch (NumberFormatException | JRException ex) {
+                        JOptionPane.showMessageDialog(null, ex);
+
+                    }
+
+                }
+
+            } else {
+
+                if (printer == 1) {
+                    //Normal
+
+                    //JOptionPane.showMessageDialog(null, balanceduetext.getText());
+                    try {
+                        String num = nettotal;
+                        //String arebic = convertNumberToArabicWords(num);
+                        String inwords = convertToIndianCurrency(num);
+                        String convert = inwords;
+
+                        JasperDesign jd = JRXmlLoader.load(new File("")
+                                .getAbsolutePath()
+                                + "/src/Report/creditinvoice.jrxml");
+                        HashMap para = new HashMap();
+                        para.put("invoiceno", itemnamesearch.getSelectedItem());
+                        para.put("paymenttype", "Credit");
+                        para.put("cashier", username);
+                        //  para.put("prevoiusdue", balanceduetext.getText());
+                        // para.put("currentdue", totalinvoiceamount.getText());
+                        // para.put("totaldue", netstext.getText());
+                        para.put("inwords", convert);
+                        JasperReport jr = JasperCompileManager.compileReport(jd);
+                        JasperPrint jp = JasperFillManager.fillReport(jr, para, conn);
+
+                        //  JasperPrintManager.printReport(jp, true);
+                        JasperViewer.viewReport(jp, false);
+
+                    } catch (NumberFormatException | JRException ex) {
+                        JOptionPane.showMessageDialog(null, ex);
+
+                    }
+
+                } else {
+
+                    try {
+
+                        JasperDesign jd = JRXmlLoader.load(new File("")
+                                .getAbsolutePath()
+                                + "/src/Report/BilRecieptCredit.jrxml");
+
+                        HashMap para = new HashMap();
+                        para.put("invoiceno", itemnamesearch.getSelectedItem());
+                        //  para.put("receive", totalinvoice);
+                        //para.put("return", "0.00");
+                        JasperReport jr = JasperCompileManager.compileReport(jd);
+                        JasperPrint jp = JasperFillManager.fillReport(jr, para, conn);
+                        JasperViewer.viewReport(jp, false);
+
+                    } catch (NumberFormatException | JRException ex) {
+
+                        JOptionPane.showMessageDialog(null, ex);
+
+                    }
+
+                }
+
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void paymenttypeboxdetailsPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_paymenttypeboxdetailsPopupMenuWillBecomeInvisible
+        try {
+            CheckType();
+        } catch (SQLException ex) {
+            Logger.getLogger(InvoiceCheck.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        clear();
+        DefaultTableModel model2 = (DefaultTableModel) datatbl1.getModel();
+        model2.setRowCount(0);
+    }//GEN-LAST:event_paymenttypeboxdetailsPopupMenuWillBecomeInvisible
+
+    private void itemnamesearchPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_itemnamesearchPopupMenuWillBecomeInvisible
+
+        if (itemnamesearch.getSelectedIndex() > 0) {
+            try {
+                Serach1();
+            } catch (SQLException ex) {
+                Logger.getLogger(InvoiceCheck.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            clear();
+            DefaultTableModel model2 = (DefaultTableModel) datatbl1.getModel();
+            model2.setRowCount(0);
+        }
+
+    }//GEN-LAST:event_itemnamesearchPopupMenuWillBecomeInvisible
+
+    private void itemnamesearchPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_itemnamesearchPopupMenuWillBecomeVisible
+
+    }//GEN-LAST:event_itemnamesearchPopupMenuWillBecomeVisible
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        try {
+
+            JasperDesign jd = JRXmlLoader.load(new File("")
+                    .getAbsolutePath()
+                    + "/src/Report/Return.jrxml");
+            //    JasperDesign jd = JRXmlLoader.load("C:\\Users\\adnan\\Documents\\NetBeansProjects\\MobileInvoice\\src\\Riport\\voiceriport.jrxml");
+
+            HashMap para = new HashMap();
+            para.put("returnno", returnNo);
+            // para.put("cusid", cusId);
+            para.put("cashier", username);
+            // para.put("discount", netdiscount.getText());
+            // para.put("prevoiusdue", previseamonmttext.getText());
+
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+            JasperPrint jp = JasperFillManager.fillReport(jr, para, conn);
+
+            //  JasperPrintManager.printReport(jp, true);
+            JasperViewer.viewReport(jp, false);
+
+        } catch (NumberFormatException | JRException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            int rows = datatbl1.getRowCount();
+            for (int row = 0; row < rows; row++) {
+                String procode = (String) datatbl1.getValueAt(row, 1);
+                float qty = (Float) datatbl1.getValueAt(row, 8);
+                StockpdatePlus(procode, qty);
+            }
+            JOptionPane.showMessageDialog(this, "Update");
+        } catch (NumberFormatException | HeadlessException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+    private void StockpdatePlus(String s, float qtyint) {
+
+        try {
+
+            String sql = "Select Qty from stockdetails where itemcode =?";
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, s);
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+
+                float stock = rs.getFloat("Qty");
+                float update_qty = stock - qtyint;
+                String sql1 = "Update stockdetails set Qty='" + update_qty + "' where itemcode='" + s + "'";
+                pst = conn.prepareStatement(sql1);
+                pst.execute();
+
+            }  //JOptionPane.showMessageDialog(null, add1);
+
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(null, e);
+
+        }
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Datetext;
+    private javax.swing.JTextField customertext;
+    private javax.swing.JTable datatbl1;
+    private javax.swing.JTextField discounttext;
+    private javax.swing.JTextField duetext;
+    private javax.swing.JComboBox<String> itemnamesearch;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField netTotalText;
+    private javax.swing.JTextField paybleamttext;
+    private javax.swing.JComboBox<String> paymenttypeboxdetails;
+    private javax.swing.JTextField recievedtext;
+    private javax.swing.JTextField returnamttext;
+    private javax.swing.JTable returntable;
+    private javax.swing.JTextField roundingtext;
+    private javax.swing.JTextField totalVatText;
+    private javax.swing.JTextField totalamounttext;
+    // End of variables declaration//GEN-END:variables
+ public static String convertToIndianCurrency(String num) {
+        BigDecimal bd = new BigDecimal(num);
+        long number = bd.longValue();
+        long no = bd.longValue();
+        int decimal = (int) (bd.remainder(BigDecimal.ONE).doubleValue() * 100);
+        int digits_length = String.valueOf(no).length();
+        int i = 0;
+        ArrayList<String> str = new ArrayList<>();
+        HashMap<Integer, String> words = new HashMap<>();
+        words.put(0, "");
+        words.put(1, "One");
+        words.put(2, "Two");
+        words.put(3, "Three");
+        words.put(4, "Four");
+        words.put(5, "Five");
+        words.put(6, "Six");
+        words.put(7, "Seven");
+        words.put(8, "Eight");
+        words.put(9, "Nine");
+        words.put(10, "Ten");
+        words.put(11, "Eleven");
+        words.put(12, "Twelve");
+        words.put(13, "Thirteen");
+        words.put(14, "Fourteen");
+        words.put(15, "Fifteen");
+        words.put(16, "Sixteen");
+        words.put(17, "Seventeen");
+        words.put(18, "Eighteen");
+        words.put(19, "Nineteen");
+        words.put(20, "Twenty");
+        words.put(30, "Thirty");
+        words.put(40, "Forty");
+        words.put(50, "Fifty");
+        words.put(60, "Sixty");
+        words.put(70, "Seventy");
+        words.put(80, "Eighty");
+        words.put(90, "Ninety");
+        String digits[] = {"", "Hundred", "Thousand", "Lakh", "Crore"};
+        while (i < digits_length) {
+            int divider = (i == 2) ? 10 : 100;
+            number = no % divider;
+            no = no / divider;
+            i += divider == 10 ? 1 : 2;
+            if (number > 0) {
+                int counter = str.size();
+                String plural = (counter > 0 && number > 9) ? "s" : "";
+                String tmp = (number < 21) ? words.get((int) number) + " " + digits[counter] + plural : words.get((int) Math.floor(number / 10) * 10) + " " + words.get((int) (number % 10)) + " " + digits[counter] + plural;
+                str.add(tmp);
+            } else {
+                str.add("");
+            }
+        }
+
+        Collections.reverse(str);
+        // ArrayList<String> Rupees =str;
+//String Rupees = String.join(" ", str).trim();
+
+        String Rupees = String.join(" ", str).trim();
+
+        String paise = (decimal) > 0 ? " And " + words.get((int) (decimal - decimal % 10)) + " Files" + words.get((int) (decimal % 10)) : "";
+        return Rupees + paise + " " + "Taka Only";
+    }
+//Arebic
+
+    public static String convertNumberToArabicWords(String number) throws NumberFormatException {
+
+// check if the input string is number or not
+        Double.parseDouble(number);
+
+// check if its floating point number or not
+        if (number.contains(".")) {// yes
+// the number
+            String theNumber = number.substring(0, number.indexOf('.'));
+// the floating point number
+            String theFloat = number.substring(number.indexOf('.') + 1);
+// check how many digits in the number 1:x 2:xx 3:xxx 4:xxxx 5:xxxxx
+// 6:xxxxxx
+            switch (theNumber.length()) {
+                case 1:
+                    return convertOneDigits(theNumber) + " فاصلة " + convertTwoDigits(theFloat);
+                case 2:
+                    return convertTwoDigits(theNumber) + " فاصلة " + convertTwoDigits(theFloat);
+                case 3:
+                    return convertThreeDigits(theNumber) + " فاصلة " + convertTwoDigits(theFloat);
+                case 4:
+                    return convertFourDigits(theNumber) + " فاصلة " + convertTwoDigits(theFloat);
+                case 5:
+                    return convertFiveDigits(theNumber) + " فاصلة " + convertTwoDigits(theFloat);
+                case 6:
+                    return convertSixDigits(theNumber) + " فاصلة " + convertTwoDigits(theFloat);
+                default:
+                    return "";
+            }
+        } else {
+            switch (number.length()) {
+                case 1:
+                    return convertOneDigits(number);
+                case 2:
+                    return convertTwoDigits(number);
+                case 3:
+                    return convertThreeDigits(number);
+                case 4:
+                    return convertFourDigits(number);
+                case 5:
+                    return convertFiveDigits(number);
+                case 6:
+                    return convertSixDigits(number);
+                default:
+                    return "";
+            }
+
+        }
+    }
+
+// -------------------------------------------
+    private static String convertOneDigits(String oneDigit) {
+        switch (Integer.parseInt(oneDigit)) {
+            case 1:
+                return "واحد";
+            case 2:
+                return "إثنان";
+            case 3:
+                return "ثلاثه";
+            case 4:
+                return "أربعه";
+            case 5:
+                return "خمسه";
+            case 6:
+                return "سته";
+            case 7:
+                return "سبعه";
+            case 8:
+                return "ثمانيه";
+            case 9:
+                return "تسعه";
+            default:
+                return "";
+        }
+    }
+
+    private static String convertTwoDigits(String twoDigits) {
+        String returnAlpha = "00";
+// check if the first digit is 0 like 0x
+        if (twoDigits.charAt(0) == '0' && twoDigits.charAt(1) != '0') {// yes
+// convert two digits to one
+            return convertOneDigits(String.valueOf(twoDigits.charAt(1)));
+        } else {// no
+// check the first digit 1x 2x 3x 4x 5x 6x 7x 8x 9x
+            switch (getIntVal(twoDigits.charAt(0))) {
+                case 1: {// 1x
+                    if (getIntVal(twoDigits.charAt(1)) == 1) {
+                        return "إحدىعشر";
+                    }
+                    if (getIntVal(twoDigits.charAt(1)) == 2) {
+                        return "إثنىعشر";
+                    } else {
+                        return convertOneDigits(String.valueOf(twoDigits.charAt(1))) + " " + "عشر";
+                    }
+                }
+                case 2:// 2x x:not 0
+                    returnAlpha = "عشرون";
+                    break;
+                case 3:// 3x x:not 0
+                    returnAlpha = "ثلاثون";
+                    break;
+                case 4:// 4x x:not 0
+                    returnAlpha = "أريعون";
+                    break;
+                case 5:// 5x x:not 0
+                    returnAlpha = "خمسون";
+                    break;
+                case 6:// 6x x:not 0
+                    returnAlpha = "ستون";
+                    break;
+                case 7:// 7x x:not 0
+                    returnAlpha = "سبعون";
+                    break;
+                case 8:// 8x x:not 0
+                    returnAlpha = "ثمانون";
+                    break;
+                case 9:// 9x x:not 0
+                    returnAlpha = "تسعون";
+                    break;
+                default:
+                    returnAlpha = "";
+                    break;
+            }
+        }
+
+// 20 - 99
+// x0 x:not 0,1
+        if (convertOneDigits(String.valueOf(twoDigits.charAt(1))).length() == 0) {
+            return returnAlpha;
+        } else {// xx x:not 0
+            return convertOneDigits(String.valueOf(twoDigits.charAt(1))) + " و " + returnAlpha;
+        }
+    }
+
+    private static String convertThreeDigits(String threeDigits) {
+
+// check the first digit x00
+        switch (getIntVal(threeDigits.charAt(0))) {
+
+            case 1: {// 100 - 199
+                if (getIntVal(threeDigits.charAt(1)) == 0) {// 10x
+                    if (getIntVal(threeDigits.charAt(2)) == 0) {// 100
+                        return "مائه";
+                    } else {// 10x x: is not 0
+                        return "مائه" + " و " + convertOneDigits(String.valueOf(threeDigits.charAt(2)));
+                    }
+                } else {// 1xx x: is not 0
+                    return "مائه" + " و " + convertTwoDigits(threeDigits.substring(1, 3));
+                }
+            }
+            case 2: {// 200 - 299
+                if (getIntVal(threeDigits.charAt(1)) == 0) {// 20x
+                    if (getIntVal(threeDigits.charAt(2)) == 0) {// 200
+                        return "مائتين";
+                    } else {// 20x x:not 0
+                        return "مائتين" + " و " + convertOneDigits(String.valueOf(threeDigits.charAt(2)));
+                    }
+                } else {// 2xx x:not 0
+                    return "مائتين" + " و " + convertTwoDigits(threeDigits.substring(1, 3));
+                }
+            }
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9: {// 300 - 999
+                if (getIntVal(threeDigits.charAt(1)) == 0) {// x0x x:not 0
+                    if (getIntVal(threeDigits.charAt(2)) == 0) {// x00 x:not 0
+                        return convertOneDigits(String.valueOf(threeDigits.charAt(1) + "مائه"));
+                    } else {// x0x x:not 0
+                        return convertOneDigits(String.valueOf(threeDigits.charAt(0))) + "مائه" + " و "
+                                + convertOneDigits(String.valueOf(threeDigits.charAt(2)));
+                    }
+                } else {// xxx x:not 0
+                    return convertOneDigits(String.valueOf(threeDigits.charAt(0))) + "مائه" + " و "
+                            + convertTwoDigits(threeDigits.substring(1, 3));
+                }
+            }
+
+            case 0: {// 000 - 099
+                if (threeDigits.charAt(1) == '0') {// 00x
+                    if (threeDigits.charAt(2) == '0') {// 000
+                        return "";
+                    } else {// 00x x:not 0
+                        return convertOneDigits(String.valueOf(threeDigits.charAt(2)));
+                    }
+                } else {// 0xx x:not 0
+                    return convertTwoDigits(threeDigits.substring(1, 3));
+                }
+            }
+            default:
+                return "";
+        }
+    }
+
+    private static String convertFourDigits(String fourDigits) {
+// xxxx
+        switch (getIntVal(fourDigits.charAt(0))) {
+
+            case 1: {// 1000 - 1999
+                if (getIntVal(fourDigits.charAt(1)) == 0) {// 10xx x:not 0
+                    if (getIntVal(fourDigits.charAt(2)) == 0) {// 100x x:not 0
+                        if (getIntVal(fourDigits.charAt(3)) == 0) {// 1000
+                            return "ألف";
+                        } else {// 100x x:not 0
+                            return "ألف" + " و " + convertOneDigits(String.valueOf(fourDigits.charAt(3)));
+                        }
+                    } else {// 10xx x:not 0
+                        return "ألف" + " و " + convertTwoDigits(fourDigits.substring(2, 3));
+                    }
+                } else {// 1xxx x:not 0
+                    return "ألف" + " و " + convertThreeDigits(fourDigits.substring(1, 4));
+                }
+            }
+            case 2: {// 2000 - 2999
+                if (getIntVal(fourDigits.charAt(1)) == 0) {// 20xx
+                    if (getIntVal(fourDigits.charAt(2)) == 0) {// 200x
+                        if (getIntVal(fourDigits.charAt(3)) == 0) {// 2000
+                            return "ألفين";
+                        } else {// 200x x:not 0
+                            return "ألفين" + " و " + convertOneDigits(String.valueOf(fourDigits.charAt(3)));
+                        }
+                    } else {// 20xx x:not 0
+                        return "ألفين" + " و " + convertTwoDigits(fourDigits.substring(2, 3));
+                    }
+                } else {// 2xxx x:not 0
+                    return "ألفين" + " و " + convertThreeDigits(fourDigits.substring(1, 4));
+                }
+            }
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9: {// 3000 - 9999
+                if (getIntVal(fourDigits.charAt(1)) == 0) {// x0xx x:not 0
+                    if (getIntVal(fourDigits.charAt(2)) == 0) {// x00x x:not 0
+                        if (getIntVal(fourDigits.charAt(3)) == 0) {// x000 x:not 0
+                            return convertOneDigits(String.valueOf(fourDigits.charAt(0))) + " ألاف";
+                        } else {// x00x x:not 0
+                            return convertOneDigits(String.valueOf(fourDigits.charAt(0))) + " ألاف" + " و "
+                                    + convertOneDigits(String.valueOf(fourDigits.charAt(3)));
+                        }
+                    } else {// x0xx x:not 0
+                        return convertOneDigits(String.valueOf(fourDigits.charAt(0))) + " ألاف" + " و "
+                                + convertTwoDigits(fourDigits.substring(2, 3));
+                    }
+                } else {// xxxx x:not 0
+                    return convertOneDigits(String.valueOf(fourDigits.charAt(0))) + " ألاف" + " و "
+                            + convertThreeDigits(fourDigits.substring(1, 4));
+                }
+            }
+
+            default:
+                return "";
+        }
+    }
+
+    private static String convertFiveDigits(String fiveDigits) {
+        if (convertThreeDigits(fiveDigits.substring(2, 5)).length() == 0) {// xx000
+// x:not
+// 0
+            return convertTwoDigits(fiveDigits.substring(0, 2)) + " ألف ";
+        } else {// xxxxx x:not 0
+            return convertTwoDigits(fiveDigits.substring(0, 2)) + " ألفا " + " و "
+                    + convertThreeDigits(fiveDigits.substring(2, 5));
+        }
+    }
+
+    private static String convertSixDigits(String sixDigits) {
+
+        if (convertThreeDigits(sixDigits.substring(2, 5)).length() == 0) {// xxx000
+// x:not
+// 0
+            return convertThreeDigits(sixDigits.substring(0, 3)) + " ألف ";
+        } else {// xxxxxx x:not 0
+            return convertThreeDigits(sixDigits.substring(0, 3)) + " ألفا " + " و "
+                    + convertThreeDigits(sixDigits.substring(3, 6));
+        }
+    }
+
+    private static int getIntVal(char c) {
+        return Integer.parseInt(String.valueOf(c));
+    }
+}

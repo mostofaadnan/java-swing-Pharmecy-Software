@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="576" pageHeight="432" columnWidth="536" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="52884d23-6361-430e-a2c1-8dece96bfa8e">
+	<property name="ireport.zoom" value="1.331000000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="159"/>
+	<parameter name="employeid" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     employeeinfo.`id` AS employeeinfo_id,
+     employeeinfo.`name` AS employeeinfo_name,
+     employeeinfo.`father` AS employeeinfo_father,
+     employeeinfo.`mother` AS employeeinfo_mother,
+     employeeinfo.`gender` AS employeeinfo_gender,
+     DATE_FORMAT(employeeinfo.`dob`, '%d-%m-%Y') AS employeeinfo_dob,
+     employeeinfo.`address` AS employeeinfo_address,
+     employeeinfo.`contact` AS employeeinfo_contact,
+     DATE_FORMAT(employeeinfo.`openingdate`, '%d-%M-%Y') AS employeeinfo_openingdate,
+     employeeinfo.`disignation` AS employeeinfo_disignation,
+     employeeinfo.`startingsallery` AS employeeinfo_startingsallery,
+     employeeinfo.`status` AS employeeinfo_status,
+     employeeinfo.`paidsalery` AS employeeinfo_paidsalery,
+     employeeinfo.`allowance` AS employeeinfo_allowance,
+     employeeinfo.`picture` AS employeeinfo_picture,
+     employeeinfo.`inputuser` AS employeeinfo_inputuser,
+     reportdesign.`id` AS reportdesign_id,
+     reportdesign.`picture` AS reportdesign_picture,
+     reportdesign.`companyname` AS reportdesign_companyname,
+     reportdesign.`arebicName` AS reportdesign_arebicName,
+     reportdesign.`headeraddress` AS reportdesign_headeraddress,
+     reportdesign.`contact` AS reportdesign_contact,
+     reportdesign.`description` AS reportdesign_description,
+     reportdesign.`footeraddress` AS reportdesign_footeraddress
+FROM
+     `employeeinfo` employeeinfo,
+     `reportdesign` reportdesign
+WHERE
+     employeeinfo.`id` = $P{employeid}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="father" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="mother" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="gender" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dob" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="contact" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="openingdate" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="disignation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="startingsallery" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="paidsalery" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="allowance" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="picture" class="java.awt.Image">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inputuser" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="companyname" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="arebicName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="headeraddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="footeraddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="employeeinfo_id" class="java.lang.Integer"/>
+	<field name="employeeinfo_name" class="java.lang.String"/>
+	<field name="employeeinfo_father" class="java.lang.String"/>
+	<field name="employeeinfo_mother" class="java.lang.String"/>
+	<field name="employeeinfo_gender" class="java.lang.String"/>
+	<field name="employeeinfo_dob" class="java.lang.String"/>
+	<field name="employeeinfo_address" class="java.lang.String"/>
+	<field name="employeeinfo_contact" class="java.lang.String"/>
+	<field name="employeeinfo_openingdate" class="java.lang.String"/>
+	<field name="employeeinfo_disignation" class="java.lang.String"/>
+	<field name="employeeinfo_startingsallery" class="java.lang.Double"/>
+	<field name="employeeinfo_status" class="java.lang.String"/>
+	<field name="employeeinfo_paidsalery" class="java.lang.Double"/>
+	<field name="employeeinfo_allowance" class="java.lang.Double"/>
+	<field name="employeeinfo_picture" class="java.awt.Image"/>
+	<field name="employeeinfo_inputuser" class="java.lang.Integer"/>
+	<field name="reportdesign_id" class="java.lang.Integer"/>
+	<field name="reportdesign_picture" class="java.awt.Image"/>
+	<field name="reportdesign_companyname" class="java.lang.String"/>
+	<field name="reportdesign_arebicName" class="java.lang.String"/>
+	<field name="reportdesign_headeraddress" class="java.lang.String"/>
+	<field name="reportdesign_contact" class="java.lang.String"/>
+	<field name="reportdesign_description" class="java.lang.String"/>
+	<field name="reportdesign_footeraddress" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="274" splitType="Stretch">
+			<rectangle radius="0">
+				<reportElement x="0" y="0" width="180" height="264" forecolor="#999999" uuid="bddcc32d-b2dd-46ab-bdb8-892e95d1515e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="238" width="180" height="26" backcolor="#333333" uuid="bced9aa0-e76f-4809-adc4-a3ef75af7e40"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle radius="0">
+				<reportElement x="194" y="0" width="180" height="264" forecolor="#999999" uuid="8a0f1f18-f794-4d21-94f4-549e66207773"/>
+			</rectangle>
+			<image scaleImage="FillFrame">
+				<reportElement x="15" y="197" width="40" height="40" isRemoveLineWhenBlank="true" uuid="fc5a21bd-f885-4412-b1d9-8d9a7717ed77"/>
+				<imageExpression><![CDATA[$F{reportdesign_picture}]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame">
+				<reportElement x="39" y="24" width="100" height="100" uuid="2c08ffb6-7b9e-48a5-9b0f-ab627e907e63"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineColor="#999999"/>
+				</graphicElement>
+				<imageExpression><![CDATA[$F{employeeinfo_picture}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="14" y="125" width="154" height="20" uuid="179c275c-6cd7-4394-b097-5adfc3ed86d5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{employeeinfo_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="14" y="181" width="154" height="15" uuid="87cb629f-8b1d-4eee-8a35-781c129fabfe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{employeeinfo_disignation}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="229" y="242" width="109" height="1" uuid="960a4584-22c0-4cc4-839a-8c75d5c3c388"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="229" y="243" width="109" height="20" uuid="55ef6cf5-8fd7-495a-9e16-06f75b7674ed"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MANAGING DIRECTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="76" width="180" height="26" forecolor="#990000" uuid="9ea7e88d-f657-421d-bdec-55e06fb6992c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[If found please return to]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="194" y="145" width="180" height="30" uuid="093fb9c1-6e69-43f1-b900-7783c247fb51"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headeraddress}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="202" y="6" width="39" height="14" uuid="30b2c753-602f-4cdd-9efb-4b2d3b10f51b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gender:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="20" width="65" height="14" uuid="b2300a99-8cc6-43d7-b87e-430d4ae47994"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Blood Group:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="48" width="27" height="14" uuid="96286c83-55ab-4f4a-8ea7-74c6e087a72e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cell:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="229" y="48" width="145" height="14" uuid="66725bdc-3e51-4bb8-ac47-70607ed1e6a5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{employeeinfo_contact}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="6" width="124" height="14" uuid="c4fbdcce-5914-4cbd-abb1-555f340b6ef4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{employeeinfo_gender}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="202" y="61" width="70" height="14" uuid="eb041dc3-777c-4b75-a861-e210aaa42cfb"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Of Issue:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="271" y="61" width="90" height="14" uuid="6e307db8-4917-43e8-acd9-eecf19d95c5f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{employeeinfo_openingdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="202" y="34" width="65" height="14" uuid="3d401603-d3f8-4546-8845-20cae3de1b81"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Of Birth:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="39" y="3" width="100" height="17" forecolor="#000000" backcolor="#333333" uuid="49acb87a-f32d-456a-a665-ed90910eaa91"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="39" y="3" width="100" height="17" forecolor="#FFFFFF" uuid="6fba5cac-b90f-48f8-9d69-17b18e5d8041"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID CARD]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="14" y="146" width="154" height="35" uuid="fe21c464-8178-4ab5-8d36-a8c39c04c1ee"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39" drawText="true" checksumRequired="false">
+					<jr:codeExpression><![CDATA[$P{employeid}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+			<textField>
+				<reportElement x="0" y="238" width="180" height="25" forecolor="#FFFFFF" uuid="6147da78-2ba3-439f-874d-de04ad291b47"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headeraddress}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="194" y="175" width="180" height="40" uuid="02658107-efda-4484-b0f8-28b1f2d3d0b5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reportdesign_contact}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="34" width="107" height="14" uuid="b9028ff5-5444-49cb-b62a-a08a62501715"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{employeeinfo_dob}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="57" y="198" width="113" height="36" uuid="1f958b42-6f6e-4acb-ae2c-c249f97d47ca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyname}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement x="207" y="105" width="40" height="40" isRemoveLineWhenBlank="true" uuid="719f0092-1018-4677-b15d-1b4543c1cd3c"/>
+				<imageExpression><![CDATA[$F{reportdesign_picture}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="249" y="106" width="113" height="36" uuid="e017a548-f2dc-4456-9f6c-d0c2d19ab697"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyname}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

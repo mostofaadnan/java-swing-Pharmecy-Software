@@ -1,0 +1,1218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Day Close" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3af10968-1924-46f5-9ffd-da4a91fc26c7">
+	<property name="ireport.zoom" value="0.8264462809917368"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="89"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+			<topPen lineColor="#333333"/>
+			<leftPen lineColor="#333333"/>
+			<bottomPen lineColor="#333333"/>
+			<rightPen lineColor="#333333"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<topPen lineColor="#333333"/>
+			<leftPen lineColor="#333333"/>
+			<bottomPen lineColor="#333333"/>
+			<rightPen lineColor="#333333"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<topPen lineColor="#333333"/>
+			<leftPen lineColor="#333333"/>
+			<bottomPen lineColor="#333333"/>
+			<rightPen lineColor="#333333"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F8F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFBFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F8F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFBFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F8F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFBFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="049ec4fb-d07f-4eb3-91a0-5f9750bb5a59">
+		<parameter name="purchase" class="java.lang.String"/>
+		<parameter name="import" class="java.lang.String"/>
+		<parameter name="export" class="java.lang.String"/>
+		<parameter name="creditinvoice" class="java.lang.String"/>
+		<parameter name="cashinvoice" class="java.lang.String"/>
+		<parameter name="totalinvoice" class="java.lang.String"/>
+		<parameter name="pcaspay" class="java.lang.String"/>
+		<parameter name="pbanpay" class="java.lang.String"/>
+		<parameter name="ptotalpay" class="java.lang.String"/>
+		<parameter name="imcashpay" class="java.lang.String"/>
+		<parameter name="imbankpay" class="java.lang.String"/>
+		<parameter name="totalimpay" class="java.lang.String"/>
+		<parameter name="tcashpay" class="java.lang.String"/>
+		<parameter name="tbankpay" class="java.lang.String"/>
+		<parameter name="totalpay" class="java.lang.String"/>
+		<parameter name="crcasre" class="java.lang.String"/>
+		<parameter name="crbancr" class="java.lang.String"/>
+		<parameter name="totalcrre" class="java.lang.String"/>
+		<parameter name="excasre" class="java.lang.String"/>
+		<parameter name="exbanre" class="java.lang.String"/>
+		<parameter name="toexre" class="java.lang.String"/>
+		<parameter name="bankcashout" class="java.lang.String"/>
+		<parameter name="bankcashin" class="java.lang.String"/>
+		<parameter name="drwercashin" class="java.lang.String"/>
+		<parameter name="drwercashout" class="java.lang.String"/>
+		<parameter name="totlcashin" class="java.lang.String"/>
+		<parameter name="totlcashout" class="java.lang.String"/>
+		<parameter name="bankbalanc" class="java.lang.String"/>
+		<parameter name="cashbalance" class="java.lang.String"/>
+		<parameter name="tocashre" class="java.lang.String"/>
+		<parameter name="tobanre" class="java.lang.String"/>
+		<parameter name="totalrecieve" class="java.lang.String"/>
+		<parameter name="expenses" class="java.lang.String"/>
+		<parameter name="purchasereturn" class="java.lang.String"/>
+		<parameter name="invoiceReturn" class="java.lang.String"/>
+		<parameter name="purchase_due" class="java.lang.String"/>
+		<parameter name="Invoice_due" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="purchase" class="java.lang.String"/>
+	<parameter name="import" class="java.lang.String"/>
+	<parameter name="export" class="java.lang.String"/>
+	<parameter name="creditinvoice" class="java.lang.String"/>
+	<parameter name="cashinvoice" class="java.lang.String"/>
+	<parameter name="totalinvoice" class="java.lang.String"/>
+	<parameter name="pcaspay" class="java.lang.String"/>
+	<parameter name="pbanpay" class="java.lang.String"/>
+	<parameter name="ptotalpay" class="java.lang.String"/>
+	<parameter name="imcashpay" class="java.lang.String"/>
+	<parameter name="imbankpay" class="java.lang.String"/>
+	<parameter name="totalimpay" class="java.lang.String"/>
+	<parameter name="tcashpay" class="java.lang.String"/>
+	<parameter name="tbankpay" class="java.lang.String"/>
+	<parameter name="totalpay" class="java.lang.String"/>
+	<parameter name="crcasre" class="java.lang.String"/>
+	<parameter name="crbancr" class="java.lang.String"/>
+	<parameter name="totalcrre" class="java.lang.String"/>
+	<parameter name="excasre" class="java.lang.String"/>
+	<parameter name="exbanre" class="java.lang.String"/>
+	<parameter name="toexre" class="java.lang.String"/>
+	<parameter name="bankcashout" class="java.lang.String"/>
+	<parameter name="bankcashin" class="java.lang.String"/>
+	<parameter name="drwercashin" class="java.lang.String"/>
+	<parameter name="drwercashout" class="java.lang.String"/>
+	<parameter name="totlcashin" class="java.lang.String"/>
+	<parameter name="totlcashout" class="java.lang.String"/>
+	<parameter name="bankbalanc" class="java.lang.String"/>
+	<parameter name="cashbalance" class="java.lang.String"/>
+	<parameter name="tocashre" class="java.lang.String"/>
+	<parameter name="tobanre" class="java.lang.String"/>
+	<parameter name="totalrecieve" class="java.lang.String"/>
+	<parameter name="description" class="java.lang.String"/>
+	<parameter name="expenses" class="java.lang.String"/>
+	<parameter name="purchasereturn" class="java.lang.String"/>
+	<parameter name="invoiceReturn" class="java.lang.String"/>
+	<parameter name="purchase_due" class="java.lang.String"/>
+	<parameter name="Invoice_due" class="java.lang.String"/>
+	<parameter name="date" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from reportdesign;]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="picture" class="java.awt.Image">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="companyname" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="arebicName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="headeraddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="contact" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="footeraddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="68" splitType="Stretch">
+			<textField>
+				<reportElement x="277" y="43" width="248" height="14" uuid="80605ce4-b866-4b15-984b-e2f99907e348"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contact}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="277" y="2" width="248" height="26" forecolor="#000000" uuid="46b753aa-f0a6-4b17-8d3f-35f0fef0bf2d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="277" y="28" width="248" height="14" uuid="caa69534-6884-4b22-9078-80a6f8369dc7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headeraddress}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="59" width="802" height="1" uuid="de5ff009-ec82-46ea-80db-7f591782f537"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="26">
+			<staticText>
+				<reportElement x="349" y="0" width="104" height="20" uuid="302e7da1-7f06-49ce-89ad-8c7f19ed0a7b"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Day Summary]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="677" y="0" width="122" height="20" uuid="fbc6237e-6b3f-4218-a441-56e562d429d7"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DATE: "+$P{date}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="299">
+			<componentElement>
+				<reportElement key="table 4" style="table" x="0" y="0" width="799" height="297" uuid="350a08cd-b726-421a-9fc5-8fca037367e8"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="6cca76e7-bff2-44bc-a0ed-d309ecba4422">
+						<datasetParameter name="purchase">
+							<datasetParameterExpression><![CDATA[$P{purchase}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="import">
+							<datasetParameterExpression><![CDATA[$P{import}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="export">
+							<datasetParameterExpression><![CDATA[$P{export}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="creditinvoice">
+							<datasetParameterExpression><![CDATA[$P{creditinvoice}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="cashinvoice">
+							<datasetParameterExpression><![CDATA[$P{cashinvoice}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="totalinvoice">
+							<datasetParameterExpression><![CDATA[$P{totalinvoice}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="pcaspay">
+							<datasetParameterExpression><![CDATA[$P{pcaspay}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="pbanpay">
+							<datasetParameterExpression><![CDATA[$P{pbanpay}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="ptotalpay">
+							<datasetParameterExpression><![CDATA[$P{ptotalpay}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="imcashpay">
+							<datasetParameterExpression><![CDATA[$P{imcashpay}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="imbankpay">
+							<datasetParameterExpression><![CDATA[$P{imbankpay}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="totalimpay">
+							<datasetParameterExpression><![CDATA[$P{totalimpay}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="tcashpay">
+							<datasetParameterExpression><![CDATA[$P{tcashpay}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="tbankpay">
+							<datasetParameterExpression><![CDATA[$P{tbankpay}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="totalpay">
+							<datasetParameterExpression><![CDATA[$P{totalpay}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="crcasre">
+							<datasetParameterExpression><![CDATA[$P{crcasre}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="crbancr">
+							<datasetParameterExpression><![CDATA[$P{crbancr}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="totalcrre">
+							<datasetParameterExpression><![CDATA[$P{totalcrre}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="excasre">
+							<datasetParameterExpression><![CDATA[$P{excasre}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="exbanre">
+							<datasetParameterExpression><![CDATA[$P{exbanre}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="toexre">
+							<datasetParameterExpression><![CDATA[$P{toexre}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="tocashre">
+							<datasetParameterExpression><![CDATA[$P{tocashre}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="tobanre">
+							<datasetParameterExpression><![CDATA[$P{tobanre}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="totalrecieve">
+							<datasetParameterExpression><![CDATA[$P{totalrecieve}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="bankcashout">
+							<datasetParameterExpression><![CDATA[$P{bankcashout}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="bankcashin">
+							<datasetParameterExpression><![CDATA[$P{bankcashin}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="drwercashin">
+							<datasetParameterExpression><![CDATA[$P{drwercashin}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="drwercashout">
+							<datasetParameterExpression><![CDATA[$P{totlcashout}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="totlcashin">
+							<datasetParameterExpression><![CDATA[$P{totlcashin}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="totlcashout">
+							<datasetParameterExpression><![CDATA[$P{totlcashout}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="bankbalanc">
+							<datasetParameterExpression><![CDATA[$P{bankbalanc}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="cashbalance">
+							<datasetParameterExpression><![CDATA[$P{cashbalance}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="expenses">
+							<datasetParameterExpression><![CDATA[$P{expenses}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="purchasereturn">
+							<datasetParameterExpression><![CDATA[$P{purchasereturn}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="purchase_due">
+							<datasetParameterExpression><![CDATA[$P{purchase_due}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="Invoice_due">
+							<datasetParameterExpression><![CDATA[$P{Invoice_due}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="invoiceReturn">
+							<datasetParameterExpression><![CDATA[$P{invoiceReturn}]]></datasetParameterExpression>
+						</datasetParameter>
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource(1)]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="79" uuid="e4530a50-e5ae-43c2-8f81-ec605ee65d98">
+						<jr:tableHeader style="table_TH" height="21" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="60" height="20" uuid="57c5e07e-ecba-4188-ab6f-b84148491a96"/>
+								<box leftPadding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Operation]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="table_TD" height="61" rowSpan="1"/>
+						<jr:columnHeader style="table_TD" height="61" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="79" height="30" uuid="71e5dcc1-540a-4a1e-8ddf-dd50b45b5905"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Purchase]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="30" width="79" height="31" uuid="56c921f5-6996-4ea2-a10b-d3610b0f9218"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right"/>
+								<text><![CDATA[Purchase Retuen]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="72" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="79" height="20" uuid="7e4061d7-13c1-4b2c-9aaa-35676278ad57"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Expenses]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell style="table_TD" height="50" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="79" height="20" uuid="0e26ab6e-1240-49ea-b722-f0b956b7530c"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right"/>
+								<text><![CDATA[Invoice]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="20" width="79" height="30" uuid="3f92dd4b-1ebf-4957-9976-3758794b3f45"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Invoice Return]]></text>
+							</staticText>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="62" uuid="1402eca6-fb1c-453f-a0a9-7ec6ef1f28ee">
+						<jr:tableHeader style="table_TH" height="21" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="20" uuid="c1e92ac5-f3bd-4d31-b5b4-ce5cef79b20a"/>
+								<box leftPadding="0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Amount]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="table_TD" height="61" rowSpan="1"/>
+						<jr:columnHeader style="table_TD" height="61" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="62" height="30" uuid="57426df2-acfc-471a-856e-8c54f1c4ec2e"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{purchase}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="30" width="62" height="31" uuid="a087460d-a71d-48e8-a3cc-4ce6a609462c"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{purchasereturn}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="72" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="62" height="20" uuid="3f2f4123-9c83-4ac0-9a3a-e7fa0f3a7a0d"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{expenses}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="table_TD" height="50" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="62" height="20" uuid="fdbc2b45-92d8-40f7-affe-9e7e44a1bc5f"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Top"/>
+								<textFieldExpression><![CDATA[$P{creditinvoice}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="20" width="62" height="30" uuid="fdb9c912-1063-4343-920c-9a8bab93f8c5"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{invoiceReturn}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="148" uuid="aefafde5-75ef-463c-a0de-893a76c88210">
+						<jr:tableHeader style="table_TH" height="21" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="148" height="20" uuid="795f372e-6d66-4813-b303-f5f7c11f2ffd"/>
+								<box leftPadding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Payment]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="table_TD" height="61" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="148" height="21" uuid="71ac6450-e7ac-4ba3-872b-8e9b973b8714"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Total Cash Payment]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="21" width="148" height="20" uuid="b7d1a5b0-3c57-4cb1-a22c-eb95dbaf1601"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Total Bank Payment]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="41" width="148" height="20" uuid="d870d315-8168-45c8-b48c-fd8d6c22b233"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Total Payment]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_TD" height="61" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="148" height="20" uuid="769227d1-f442-4e52-a28d-10c58ba67db4"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font isUnderline="false"/>
+								</textElement>
+								<text><![CDATA[Purchase Cash Payment]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="20" width="148" height="20" uuid="f56cd563-17f2-43d1-b43d-8ae4973720b5"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Purchase Bank Payment]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="40" width="148" height="21" uuid="5140b096-b7ba-43bb-9162-1885b31b4070"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Purchase Total Payment]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="72" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="50" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="64" uuid="52d8aa9e-b0e1-4dfe-bcad-01c340adce10">
+						<jr:tableHeader style="table_TH" height="21" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="64" height="20" uuid="402f5184-5bbf-4aba-8bbc-b0195ec70509"/>
+								<box leftPadding="0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Amount]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="table_TD" height="61" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="64" height="21" uuid="889cf439-3307-45e0-9e7b-75914922fb01"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$P{pcaspay}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="21" width="64" height="20" uuid="2fc8ddb6-68f8-4fd8-b721-281cb66f22bd"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$P{pbanpay}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="41" width="64" height="20" uuid="6e6e076e-1106-4923-a847-f391cc3e7c6b"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right"/>
+								<textFieldExpression><![CDATA[$P{ptotalpay}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_TD" height="61" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="64" height="20" uuid="8b789da4-6ac8-4927-93c7-f0133653bf40"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{pcaspay}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="20" width="64" height="20" uuid="11d4f788-245f-47e2-9e84-b0586c297f04"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{pbanpay}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="40" width="64" height="21" uuid="b39cc7ef-2af7-44ee-bb3f-95aa34c8fb9b"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{ptotalpay}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="72" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="50" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="102" uuid="69fe8755-6cad-41c2-8ed2-697daca39cd0">
+						<jr:tableHeader style="table_TH" height="21" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="102" height="20" uuid="7e44d71c-dc71-49c2-8f67-cf5aaa47a66e"/>
+								<box leftPadding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Recieve]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="table_TD" height="61" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="102" height="20" uuid="7694dbd4-2278-4e53-a8eb-07d0cb55360c"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Total Cash Recieve]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="20" width="102" height="21" uuid="8a04d10a-15e7-45ec-a66e-0885c24b38a5"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Total Bank Recieve]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="41" width="102" height="20" uuid="66a13abe-4889-4174-9c96-2b1cea8ccef4"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Total Recieve]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_TD" height="61" rowSpan="1"/>
+						<jr:columnFooter style="table_TD" height="72" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="102" height="24" uuid="e3928151-2e89-401f-9266-32a346ac1c25"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Cash Recieve]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="24" width="102" height="24" uuid="f4a52cf3-8a21-45fb-9261-825e224e6a15"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Bank Recieve]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="48" width="102" height="24" uuid="42e74fce-83ee-431a-87e0-46f6bf000020"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Total Recieve]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell style="table_TD" height="50" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="62" uuid="713d627b-a2e1-428b-a126-f75c768cebb6">
+						<jr:tableHeader style="table_TH" height="21" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="62" height="20" uuid="52c9e509-07c0-4d84-a3ef-2e65d9a45bf8"/>
+								<box leftPadding="0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Amount]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="table_TD" height="61" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="62" height="20" uuid="8bf9d358-e1f4-4ca2-8f07-e31f607b387a"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{crcasre}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="20" width="62" height="21" uuid="8145dfdb-bc55-4883-8f2f-753ced939fd3"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{crbancr}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="41" width="62" height="20" uuid="bf1a0aaf-4af5-4537-b14f-68b1f7a10b76"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{totalcrre}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_TD" height="61" rowSpan="1"/>
+						<jr:columnFooter style="table_TD" height="72" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="62" height="24" uuid="773f02be-c5aa-4ff0-b227-f7fa55316f8f"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{crcasre}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="24" width="62" height="24" uuid="f5b206ec-1bbf-402e-9de6-d7b0feadd558"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{crbancr}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="48" width="62" height="24" uuid="b5e5d08c-dd78-49c5-a6b1-88a59597745a"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{totalcrre}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="table_TD" height="50" rowSpan="1"/>
+					</jr:column>
+					<jr:column width="57" uuid="dc324160-1c8f-4a1f-84de-d6b4d9021e6b">
+						<jr:tableHeader style="table_TH" height="21" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="1" width="57" height="20" uuid="b4030559-db40-4c0a-ad43-9401807d7d8f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Due]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="table_TD" height="61" rowSpan="1"/>
+						<jr:columnHeader height="61" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="57" height="20" uuid="90273421-7e23-48bf-a12e-3e157b3eba52"/>
+								<box rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Purchase Due]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="72" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="50" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="57" height="20" uuid="65406812-0563-4056-91d5-26af98c1e282"/>
+								<box rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Invoice Due]]></text>
+							</staticText>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="68" uuid="b4b45624-9bc8-4759-8cf2-eea75e164000">
+						<jr:tableHeader style="table_TH" height="21" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="1" width="68" height="20" uuid="92258486-c16c-410a-b6fe-ac7ed4c6baf0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Amount]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="table_TD" height="61" rowSpan="1"/>
+						<jr:columnHeader style="table_TD" height="61" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="68" height="20" uuid="f42794d4-0d4d-4191-bd3b-a5ec5b9689bb"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{purchase_due}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="72" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="50" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="68" height="20" uuid="a55616ef-1754-4f42-ae13-6b7f5835e735"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{Invoice_due}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="108" uuid="b083daa6-ad5b-4df4-84bf-b0887efc4e1b">
+						<jr:tableHeader style="table_TH" height="21" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="107" height="20" uuid="43b3ce60-3a90-47d2-881a-8acc50f14675"/>
+								<box leftPadding="5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Bank and Cash]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="table_TD" height="61" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="108" height="20" uuid="a89aeef7-42a9-4735-a7c3-5e92ff241ffa"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Bank Balance]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="20" width="108" height="20" uuid="36088491-b9b0-4152-a2a4-bd385f4c7b59"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Cash Balance]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_TD" height="61" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="108" height="20" uuid="3e2e5a1a-7c93-4c27-b8fb-b1b634b311cd"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Bank Cash In]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="20" width="108" height="20" uuid="5a14af52-490d-4c49-89eb-ae955ff9da98"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Bank Cash Out]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="72" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="108" height="20" uuid="762eeb86-7512-493f-9e4a-85adeb240efb"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Total Cash In]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="20" width="108" height="20" uuid="402af218-3544-4343-b24a-f444888dd589"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Total Cash Out]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell style="table_TD" height="50" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="108" height="25" uuid="0f3108f3-db96-476d-99cd-390dfd69a1ac"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Cash Drawer Cash In]]></text>
+							</staticText>
+							<staticText>
+								<reportElement x="0" y="25" width="108" height="25" uuid="d81743f8-1204-4a8f-86fe-bdb70b015069"/>
+								<box leftPadding="0" rightPadding="2">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Cash Drawer Cash Out]]></text>
+							</staticText>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="8e0ef6d6-e7cf-4ce8-8699-c3a19ac49695">
+						<jr:tableHeader style="table_TH" height="21" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="50" height="20" uuid="c0f912e5-b70b-444c-9c30-fb4f375db37f"/>
+								<box leftPadding="0" rightPadding="3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Amount]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter style="table_TD" height="61" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20" uuid="52049f71-01a7-40b3-8b22-df88f2276efe"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{bankbalanc}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="20" width="50" height="20" uuid="5decd852-d793-47cf-82ca-e79f2a6ba930"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$P{cashbalance}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader style="table_TD" height="61" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20" uuid="bbf9df0a-f70c-4330-a0b7-c0e957c74ecc"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{bankcashout}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="20" width="50" height="20" uuid="a55b6bae-3cf4-42a9-96a9-6cafd984f4cc"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{bankcashin}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:columnFooter style="table_TD" height="72" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="20" uuid="41f1887d-4b49-4ec1-8bd3-c0c8e3f567a7"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{totlcashin}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="20" width="50" height="20" uuid="10780d80-b8e2-4a96-b033-ed1a62ea8098"/>
+								<box rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{totlcashout}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="table_TD" height="50" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="50" height="25" uuid="672f34d8-7048-43dd-a2b5-b364907c3894"/>
+								<box leftPadding="0" rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{drwercashin}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="0" y="25" width="50" height="25" uuid="71a13a5f-b957-408b-b43a-7d10294cce74"/>
+								<box leftPadding="0" rightPadding="3">
+									<topPen lineWidth="0.5" lineColor="#333333"/>
+									<leftPen lineWidth="0.5" lineColor="#333333"/>
+									<bottomPen lineWidth="0.5" lineColor="#333333"/>
+									<rightPen lineWidth="0.5" lineColor="#333333"/>
+								</box>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$P{drwercashout}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="68">
+			<staticText>
+				<reportElement x="343" y="51" width="116" height="15" uuid="e45e0253-aa33-42e4-90f2-18d96ff7759e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Checked by]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="51" width="81" height="15" uuid="0a0fc2e9-f6c5-4736-8966-0a987ee2144b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Prepared by]]></text>
+			</staticText>
+			<line>
+				<reportElement x="685" y="49" width="117" height="1" uuid="b703e3ca-e47f-44e3-beea-722dd182d26a"/>
+			</line>
+			<line>
+				<reportElement x="0" y="49" width="81" height="1" uuid="a65028a4-d8f9-4737-a637-079a032055cb"/>
+			</line>
+			<staticText>
+				<reportElement x="685" y="51" width="117" height="15" uuid="4dcd75d9-77ec-4803-9882-d63b63f318bf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Authorized by]]></text>
+			</staticText>
+			<line>
+				<reportElement x="343" y="50" width="116" height="1" uuid="1362b6f6-debc-4730-93e9-def255187e29"/>
+			</line>
+		</band>
+	</lastPageFooter>
+</jasperReport>

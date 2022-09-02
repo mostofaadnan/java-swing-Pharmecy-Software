@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" printOrder="Horizontal" pageWidth="595" pageHeight="842" columnWidth="559" leftMargin="18" rightMargin="18" topMargin="20" bottomMargin="20" uuid="4c2a3e95-29fd-4dc9-857c-9f3bb54499b6">
+	<property name="ireport.zoom" value="1.4641000000000035"/>
+	<property name="ireport.x" value="114"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="transactionno" class="java.lang.String"/>
+	<parameter name="supid" class="java.lang.Integer"/>
+	<parameter name="bankid" class="java.lang.String"/>
+	<parameter name="inword" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     DATE_FORMAT(parchasepayment.`paymentdate`,'%d-%m-%Y') AS parchasepayment_paymentdate,  
+     Cast(purchasepaymenthistory.`paidamount`(10,2)) AS parchasepayment_paidamount,
+    purchasepaymenthistory.`paymenttype` AS parchasepayment_paymenttype,
+     purchasepaymenthistory.`remark` AS parchasepayment_remark,
+     purchase.`id` AS purchase_id,
+     purchase.`purchaseCode` AS purchase_purchaseCode,
+     purchase.`pdate` AS purchase_pdate,
+     purchase.`supliyer` AS purchase_supliyer,
+     purchase.`Totalrate` AS purchase_Totalrate,
+     purchase.`totalvat` AS purchase_totalvat,
+     purchase.`nettotal` AS purchase_nettotal,
+     purchase.`remark` AS purchase_remark,
+     purchase.`status` AS purchase_status,
+     purchase.`GRNstatus` AS purchase_GRNstatus,
+     parchasepayment.`bankid` AS parchasepayment_bankid,
+     parchasepayment.`accNo` AS parchasepayment_accNo,
+     parchasepayment.`chequeNo` AS parchasepayment_chequeNo,
+     suplyierinfo.`id` AS suplyierinfo_id,
+     suplyierinfo.`supliyername` AS suplyierinfo_supliyername,
+     reportdesign.`id` AS reportdesign_id,
+     reportdesign.`companyname` AS reportdesign_companyname,
+     reportdesign.`arebicName` AS reportdesign_arebicName,
+     reportdesign.`headeraddress` AS reportdesign_headeraddress,
+     reportdesign.`description` AS reportdesign_description,
+     reportdesign.`footeraddress` AS reportdesign_footeraddress,
+     reportdesign.`picture` AS reportdesign_picture,
+     reportdesign.`contact` AS reportdesign_contact,
+     purchasepaymenthistory.`id` AS purchasepaymenthistory_id,
+     purchasepaymenthistory.`TR_No` AS purchasepaymenthistory_TR_No,
+     purchasepaymenthistory.`supplierid` AS purchasepaymenthistory_supplierid,
+     purchasepaymenthistory.`paymentdate` AS purchasepaymenthistory_paymentdate,
+     purchasepaymenthistory.`paidamount` AS purchasepaymenthistory_paidamount,
+     purchasepaymenthistory.`paymenttype` AS purchasepaymenthistory_paymenttype,
+     purchasepaymenthistory.`bank` AS purchasepaymenthistory_bank,
+     purchasepaymenthistory.`accno` AS purchasepaymenthistory_accno,
+     purchasepaymenthistory.`chaqueno` AS purchasepaymenthistory_chaqueno,
+     purchasepaymenthistory.`inputuser` AS purchasepaymenthistory_inputuser
+FROM
+     `purchase` purchase INNER JOIN `suplyierinfo` suplyierinfo ON purchase.`supliyer` = suplyierinfo.`id`
+     INNER JOIN `purchasepaymenthistory` purchasepaymenthistory ON purchase.`supliyer` = purchasepaymenthistory.`supplierid`,
+     `reportdesign` reportdesign
+WHERE
+     parchasepayment.transactionNo = $P{transactionno}]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="transactionNo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="parchseNo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Grnno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="payamount" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="paidamount" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="balancedue" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="paymentdate" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="paymenttype" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bankid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="accNo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="chequeNo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="payment" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="remark" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inputuser" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="supid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="purchaseCode" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pdate" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="supliyer" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Totalrate" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totalvat" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nettotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="totaldiscount" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GRNstatus" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="supliyername" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="address" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="poboxno" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="city" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="country" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="webaddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="vatReNo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="suplType" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="balanceType" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="OpeningDate" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="OpenigBalance" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DipositAmt" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="consighnmentamnt" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="contactname" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="contactdesignation" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TelephoneNo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ContactNo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="picture" class="java.awt.Image">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="companyname" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="arebicName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="headeraddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="contact" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="footeraddress" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="parchasepayment_paymentdate" class="java.lang.String"/>
+	<field name="parchasepayment_payamount" class="java.math.BigDecimal"/>
+	<field name="parchasepayment_id" class="java.lang.Integer"/>
+	<field name="parchasepayment_transactionNo" class="java.lang.String"/>
+	<field name="parchasepayment_parchseNo" class="java.lang.String"/>
+	<field name="parchasepayment_Grnno" class="java.lang.String"/>
+	<field name="parchasepayment_paidamount" class="java.math.BigDecimal"/>
+	<field name="parchasepayment_balancedue" class="java.math.BigDecimal"/>
+	<field name="parchasepayment_paymenttype" class="java.lang.String"/>
+	<field name="parchasepayment_payment" class="java.math.BigDecimal"/>
+	<field name="parchasepayment_remark" class="java.lang.String"/>
+	<field name="purchase_id" class="java.lang.Integer"/>
+	<field name="purchase_purchaseCode" class="java.lang.String"/>
+	<field name="purchase_pdate" class="java.sql.Date"/>
+	<field name="purchase_supliyer" class="java.lang.Integer"/>
+	<field name="purchase_Totalrate" class="java.lang.Double"/>
+	<field name="purchase_totalvat" class="java.lang.Double"/>
+	<field name="purchase_nettotal" class="java.lang.Double"/>
+	<field name="purchase_remark" class="java.lang.String"/>
+	<field name="purchase_status" class="java.lang.String"/>
+	<field name="purchase_GRNstatus" class="java.lang.Integer"/>
+	<field name="parchasepayment_bankid" class="java.lang.Integer"/>
+	<field name="parchasepayment_accNo" class="java.lang.String"/>
+	<field name="parchasepayment_chequeNo" class="java.lang.String"/>
+	<field name="suplyierinfo_id" class="java.lang.Integer"/>
+	<field name="suplyierinfo_supliyername" class="java.lang.String"/>
+	<field name="reportdesign_id" class="java.lang.Integer"/>
+	<field name="reportdesign_companyname" class="java.lang.String"/>
+	<field name="reportdesign_arebicName" class="java.lang.String"/>
+	<field name="reportdesign_headeraddress" class="java.lang.String"/>
+	<field name="reportdesign_description" class="java.lang.String"/>
+	<field name="reportdesign_footeraddress" class="java.lang.String"/>
+	<field name="reportdesign_picture" class="java.awt.Image"/>
+	<field name="reportdesign_contact" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="90" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="490" y="64" width="65" height="20" uuid="80c70b82-cf6d-4749-94dc-fe9ad131474b"/>
+				<box rightPadding="0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="183" y="64" width="192" height="20" uuid="302e7da1-7f06-49ce-89ad-8c7f19ed0a7b"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Payment Receipt Voucher]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="153" y="43" width="248" height="14" uuid="80605ce4-b866-4b15-984b-e2f99907e348"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contact}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="2" width="248" height="26" forecolor="#000000" uuid="46b753aa-f0a6-4b17-8d3f-35f0fef0bf2d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{companyname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="153" y="28" width="248" height="14" uuid="caa69534-6884-4b22-9078-80a6f8369dc7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headeraddress}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="59" width="555" height="1" uuid="de5ff009-ec82-46ea-80db-7f591782f537"/>
+			</line>
+			<staticText>
+				<reportElement x="460" y="64" width="33" height="20" uuid="8d564a1d-c8c5-45aa-a9bc-6de23f5ae2a9"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="226" splitType="Stretch">
+			<staticText>
+				<reportElement x="-1" y="62" width="51" height="21" uuid="11c0f8f2-86a3-4b73-825c-5b3350d61ab3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="49" y="63" width="120" height="20" uuid="9017affc-4b2f-4d59-8cd3-8be95e60872a"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineColor="#666666"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="3" y="94" width="85" height="15" uuid="bd16b107-ac27-4965-8bcf-38cb478040ff"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment To:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="111" width="86" height="18" uuid="4abe27c1-2ae2-4965-ad37-d98a3b867650"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Paid Amount:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="130" width="86" height="17" uuid="3b133342-2b8d-4fe6-8d9c-0bda10838920"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Due:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="149" width="85" height="18" uuid="735078c8-28b2-4bed-adf0-0774776b6f18"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment by:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="167" width="86" height="16" uuid="d4423796-bcf1-497c-860c-d4acd1f52d72"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Acc No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="183" width="86" height="15" uuid="b90b7ae3-8daf-43dc-83b7-b42783316260"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[In Words:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="88" y="109" width="468" height="1" forecolor="#3333FF" uuid="4ab168a5-838e-46dd-b135-7e11c205f31b"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="88" y="129" width="468" height="1" forecolor="#3333FF" uuid="8740012e-e9b8-4ccc-a8da-534f28438c95"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="87" y="147" width="469" height="1" forecolor="#3333FF" uuid="e1e2bb21-2d2f-4e13-a372-43de38c6498a"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="88" y="167" width="468" height="1" forecolor="#3333FF" uuid="91d4bb44-fdbe-4abc-889f-74fa5b17dddf"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="88" y="197" width="468" height="1" forecolor="#3333FF" uuid="4a1b5990-83d6-41d1-979b-f6acc4c938fc"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="88" y="111" width="468" height="18" uuid="b7e3d724-15db-4ac4-bf87-e367536baaf8"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{parchasepayment_paidamount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="88" y="129" width="473" height="18" uuid="22925d89-8037-4881-8cb8-5ca0e24250e4"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{parchasepayment_balancedue}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="88" y="149" width="473" height="18" uuid="a3c0b945-8107-4a1d-9c86-ee6739bcb47c"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{parchasepayment_paymenttype}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="199" y="170" width="58" height="13" uuid="9a20c44e-c4dc-4fb9-8045-b9225e4f1131"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Cheque No:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="88" y="182" width="110" height="1" forecolor="#3333FF" uuid="e5119c3e-1663-4ca9-bfe8-cd4cb40eb004"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="258" y="182" width="125" height="1" forecolor="#3333FF" uuid="06582d7a-018f-4475-91cb-7ae378be34bd"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="383" y="170" width="28" height="13" uuid="ac56f72c-d854-4a42-840f-6638bd3b27c5"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Bank:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="412" y="182" width="144" height="1" forecolor="#3333FF" uuid="6b99507f-b383-4b72-8bac-8675fd093aea"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="88" y="168" width="110" height="15" uuid="e18cf510-7dd8-48f2-ae05-1484b08cbc67"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{parchasepayment_accNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="257" y="168" width="125" height="15" uuid="2460d79e-e00e-4025-a47b-c3d63a8ad9c1"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{parchasepayment_chequeNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="88" y="94" width="471" height="15" uuid="7efe483b-c08b-4554-a2d8-a3c4ceafd322"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{suplyierinfo_supliyername}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="411" y="168" width="150" height="15" uuid="ac95185f-dbe5-4439-a4c2-86a50704adc9"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{bankid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="87" y="183" width="474" height="15" uuid="89e83085-6f41-44c7-bbaf-d3c2cd84f1e4"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{inword}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="63" width="120" height="20" uuid="2bdea3ee-6b1d-4918-868f-b1da4a43dfa8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{parchasepayment_payamount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="29" width="168" height="20" uuid="163aec28-7b13-4f0f-988e-a5bc1b999e2e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Receipt No: "+$F{parchasepayment_transactionNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="8" width="168" height="20" uuid="60884c1a-6544-44eb-a645-596204a4c434"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Date: "+$F{parchasepayment_paymentdate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="50">
+			<line>
+				<reportElement x="261" y="32" width="116" height="1" uuid="665e083f-16df-4913-9595-a9811c3036c5"/>
+			</line>
+			<staticText>
+				<reportElement x="438" y="34" width="117" height="15" uuid="5f145976-5dcd-47e4-9463-01b362764cca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Authorized by]]></text>
+			</staticText>
+			<line>
+				<reportElement x="438" y="32" width="117" height="1" uuid="f0f1202b-364c-453f-a23f-028a55a6cf0a"/>
+			</line>
+			<staticText>
+				<reportElement x="2" y="34" width="86" height="15" uuid="14b11098-0658-4efe-be67-28e3914adc52"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Customer's Signature]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="33" width="116" height="15" uuid="ecfdddd1-d133-4e94-ad8b-ef77091b6b18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Checked by]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="134" y="34" width="81" height="15" uuid="334a987b-e3f5-4ee2-b526-88dc5c31bc11"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Prepared by]]></text>
+			</staticText>
+			<line>
+				<reportElement x="134" y="32" width="81" height="1" uuid="6fae5fe6-3b76-4ccc-bae9-cab1e45f8a49"/>
+			</line>
+			<line>
+				<reportElement x="2" y="32" width="86" height="1" uuid="ee81d619-2e88-42a4-ada4-15c23560e4c1"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

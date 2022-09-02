@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="108" bottomMargin="108" uuid="b38bf394-fa3b-4c93-92db-5032696443f8">
+	<queryString>
+		<![CDATA[SELECT
+     emplyersallery.`id` AS emplyersallery_id,
+     emplyersallery.`month` AS emplyersallery_month,
+     emplyersallery.`year` AS emplyersallery_year,
+     emplyersallery.`inputdate` AS emplyersallery_inputdate,
+     emplyersallery.`amount` AS emplyersallery_amount,
+     emplyersallery.`paymentype` AS emplyersallery_paymentype,
+     emplyersallery.`bankid` AS emplyersallery_bankid,
+     emplyersallery.`accNo` AS emplyersallery_accNo,
+     emplyersallery.`chequeNo` AS emplyersallery_chequeNo,
+     emplyersallery.`remark` AS emplyersallery_remark,
+     emplyersallery.`inputuser` AS emplyersallery_inputuser,
+     employeeinfo.`name` AS employeeinfo_name,
+     employeeinfo.`father` AS employeeinfo_father,
+     employeeinfo.`mother` AS employeeinfo_mother,
+     employeeinfo.`gender` AS employeeinfo_gender,
+     employeeinfo.`dob` AS employeeinfo_dob,
+     employeeinfo.`address` AS employeeinfo_address,
+     employeeinfo.`contact` AS employeeinfo_contact,
+     employeeinfo.`openingdate` AS employeeinfo_openingdate,
+     employeeinfo.`disignation` AS employeeinfo_disignation,
+     employeeinfo.`startingsallery` AS employeeinfo_startingsallery,
+     employeeinfo.`status` AS employeeinfo_status,
+     employeeinfo.`paidsalery` AS employeeinfo_paidsalery,
+     employeeinfo.`allowance` AS employeeinfo_allowance,
+     employeeinfo.`picture` AS employeeinfo_picture,
+     employeeinfo.`inputuser` AS employeeinfo_inputuser,
+     employeeinfo.`id` AS employeeinfo_id,
+     emplyersallery.`emplyid` AS emplyersallery_emplyid
+FROM
+     `employeeinfo` employeeinfo INNER JOIN `emplyersallery` emplyersallery ON employeeinfo.`id` = emplyersallery.`emplyid`]]>
+	</queryString>
+	<field name="emplyersallery_id" class="java.lang.Integer"/>
+	<field name="emplyersallery_month" class="java.lang.String"/>
+	<field name="emplyersallery_year" class="java.lang.Integer"/>
+	<field name="emplyersallery_inputdate" class="java.sql.Date"/>
+	<field name="emplyersallery_amount" class="java.lang.Double"/>
+	<field name="emplyersallery_paymentype" class="java.lang.String"/>
+	<field name="emplyersallery_bankid" class="java.lang.Integer"/>
+	<field name="emplyersallery_accNo" class="java.lang.String"/>
+	<field name="emplyersallery_chequeNo" class="java.lang.String"/>
+	<field name="emplyersallery_remark" class="java.lang.String"/>
+	<field name="emplyersallery_inputuser" class="java.lang.Integer"/>
+	<field name="employeeinfo_name" class="java.lang.String"/>
+	<field name="employeeinfo_father" class="java.lang.String"/>
+	<field name="employeeinfo_mother" class="java.lang.String"/>
+	<field name="employeeinfo_gender" class="java.lang.String"/>
+	<field name="employeeinfo_dob" class="java.sql.Date"/>
+	<field name="employeeinfo_address" class="java.lang.String"/>
+	<field name="employeeinfo_contact" class="java.lang.String"/>
+	<field name="employeeinfo_openingdate" class="java.sql.Date"/>
+	<field name="employeeinfo_disignation" class="java.lang.String"/>
+	<field name="employeeinfo_startingsallery" class="java.lang.Double"/>
+	<field name="employeeinfo_status" class="java.lang.String"/>
+	<field name="employeeinfo_paidsalery" class="java.lang.Double"/>
+	<field name="employeeinfo_allowance" class="java.lang.Double"/>
+	<field name="employeeinfo_picture" class="java.lang.Object"/>
+	<field name="employeeinfo_inputuser" class="java.lang.Integer"/>
+	<field name="employeeinfo_id" class="java.lang.Integer"/>
+	<field name="emplyersallery_emplyid" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+</jasperReport>

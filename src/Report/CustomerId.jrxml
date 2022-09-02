@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6bde9bb8-e077-42a8-a4ff-bf20bbe0310b">
+	<property name="ireport.zoom" value="2.357947691000002"/>
+	<property name="ireport.x" value="399"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="customerid" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     reportdesign.`id` AS reportdesign_id,
+     reportdesign.`picture` AS reportdesign_picture,
+     reportdesign.`companyname` AS reportdesign_companyname,
+     reportdesign.`arebicName` AS reportdesign_arebicName,
+     reportdesign.`headeraddress` AS reportdesign_headeraddress,
+     reportdesign.`contact` AS reportdesign_contact,
+     reportdesign.`description` AS reportdesign_description,
+     reportdesign.`footeraddress` AS reportdesign_footeraddress,
+     customerinfo.`id` AS customerinfo_id,
+     customerinfo.`customername` AS customerinfo_customername,
+     customerinfo.`address` AS customerinfo_address,
+     customerinfo.`poboxno` AS customerinfo_poboxno,
+     customerinfo.`city` AS customerinfo_city,
+     customerinfo.`status` AS customerinfo_status,
+     customerinfo.`customerType` AS customerinfo_customerType,
+     customerinfo.`TelephoneNo` AS customerinfo_TelephoneNo,
+     customerinfo.`ContactNo` AS customerinfo_ContactNo,
+     customerinfo.`picture` AS customerinfo_picture,
+     customerinfo.`OpeningDate` AS customerinfo_OpeningDate,
+     customerinfo.`country` AS customerinfo_country,
+     customerinfo.`customerid` AS customerinfo_customerid
+FROM
+     `reportdesign` reportdesign,
+     `customerinfo` customerinfo
+WHERE
+     customerinfo.`customerid` = $P{customerid}]]>
+	</queryString>
+	<field name="reportdesign_id" class="java.lang.Integer"/>
+	<field name="reportdesign_picture" class="java.awt.Image"/>
+	<field name="reportdesign_companyname" class="java.lang.String"/>
+	<field name="reportdesign_arebicName" class="java.lang.String"/>
+	<field name="reportdesign_headeraddress" class="java.lang.String"/>
+	<field name="reportdesign_contact" class="java.lang.String"/>
+	<field name="reportdesign_description" class="java.lang.String"/>
+	<field name="reportdesign_footeraddress" class="java.lang.String"/>
+	<field name="customerinfo_id" class="java.lang.Integer"/>
+	<field name="customerinfo_customername" class="java.lang.String"/>
+	<field name="customerinfo_address" class="java.lang.String"/>
+	<field name="customerinfo_poboxno" class="java.lang.String"/>
+	<field name="customerinfo_city" class="java.lang.String"/>
+	<field name="customerinfo_status" class="java.lang.String"/>
+	<field name="customerinfo_customerType" class="java.lang.String"/>
+	<field name="customerinfo_TelephoneNo" class="java.lang.String"/>
+	<field name="customerinfo_ContactNo" class="java.lang.String"/>
+	<field name="customerinfo_picture" class="java.awt.Image"/>
+	<field name="customerinfo_OpeningDate" class="java.lang.String"/>
+	<field name="customerinfo_country" class="java.lang.String"/>
+	<field name="customerinfo_customerid" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="306" splitType="Stretch">
+			<rectangle radius="0">
+				<reportElement x="204" y="10" width="180" height="264" forecolor="#999999" uuid="d2a55936-a723-4dd4-9d8e-8c9cb48c9be5"/>
+			</rectangle>
+			<rectangle radius="0">
+				<reportElement x="10" y="10" width="180" height="264" forecolor="#999999" uuid="2fea599c-2af2-4f4e-b5d5-1209a0fac68f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="49" y="13" width="100" height="17" forecolor="#000000" backcolor="#333333" uuid="c9c716f6-1698-4fab-91e7-f461af1116d7"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="212" y="44" width="65" height="14" uuid="d0e6820e-5a09-4b41-bc39-f6420c8942d5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[State:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="71" width="70" height="14" uuid="085da256-350a-491a-97de-6f06679ccefc"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Of Issue:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="58" width="27" height="14" uuid="85893344-adf2-4c9c-8026-91b050b94112"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cell:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="30" width="65" height="14" uuid="bd62c0aa-982d-4b10-b2b8-1e9ed31d8251"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Post Box No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="16" width="39" height="14" uuid="c3166844-2fb1-4044-8d16-e66a37023a00"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Addrss:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="204" y="86" width="180" height="26" forecolor="#990000" uuid="68b9728e-5447-4cfc-81bf-f60383719f02"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[If found please return to]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="239" y="253" width="109" height="20" uuid="9b09b90f-2eb2-4e6c-95bc-22d5879d8c3f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MANAGING DIRECTOR]]></text>
+			</staticText>
+			<line>
+				<reportElement x="239" y="252" width="109" height="1" uuid="bcaecddf-8f07-485d-abf2-ccf9ac4d15df"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<image scaleImage="FillFrame">
+				<reportElement x="49" y="34" width="100" height="100" uuid="4e42b5ec-b925-42a5-80ee-01af48daa3bd"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineColor="#999999"/>
+				</graphicElement>
+				<imageExpression><![CDATA[$F{customerinfo_picture}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="24" y="134" width="154" height="20" uuid="9aa4b968-d484-4b5c-b1ca-75214df4dc7f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customerinfo_customername}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="251" y="16" width="130" height="14" uuid="3ada8ac3-9ef9-41b3-9ac2-b27a16aa68e5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customerinfo_address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="277" y="30" width="105" height="14" uuid="fc3824b8-a8cc-4023-a866-715bd92de498"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customerinfo_poboxno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="44" width="100" height="14" uuid="3fb3e422-def3-491b-8a80-eafacd111bfd"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customerinfo_city}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="239" y="58" width="137" height="14" uuid="f308c574-48d9-4d3f-b906-4be4a36a9df2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customerinfo_ContactNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="277" y="72" width="100" height="14" uuid="d2f08f58-5276-456d-b6eb-660c653c55e0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customerinfo_OpeningDate}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="10" y="248" width="180" height="26" backcolor="#333333" uuid="dcb506f3-3b4a-4811-b3da-650e521e487e"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="49" y="13" width="100" height="17" forecolor="#FFFFFF" uuid="a5137388-b786-469b-88df-24b5b918c620"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID CARD]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="248" width="180" height="26" forecolor="#FFFFFF" uuid="40e6b841-3bbd-449c-9f15-849a54d105a1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reportdesign_headeraddress}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="206" y="155" width="176" height="30" uuid="4eea846d-ea16-4d93-9051-ddda0c078ddc"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reportdesign_headeraddress}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="204" y="185" width="180" height="40" uuid="5af9627b-cf65-42bd-8379-0dda258338c5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reportdesign_contact}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement x="23" y="205" width="40" height="40" isRemoveLineWhenBlank="true" uuid="0cd61700-a3eb-4070-ade2-8bfe8546f90a"/>
+				<imageExpression><![CDATA[$F{reportdesign_picture}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="65" y="206" width="113" height="36" uuid="c2161429-c82d-47f7-9f34-a2650232861a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reportdesign_companyname}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame">
+				<reportElement x="216" y="115" width="40" height="40" isRemoveLineWhenBlank="true" uuid="3b94c44f-c204-435d-98f5-b7a8b30ace72"/>
+				<imageExpression><![CDATA[$F{reportdesign_picture}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="258" y="116" width="113" height="36" uuid="dbe839bf-e658-417c-83bb-de539185f484"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reportdesign_companyname}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="49" y="155" width="100" height="30" uuid="586f8ac4-8800-4006-bd1a-aed3f25790c5"/>
+				<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code39 (Extended)" drawText="true" checksumRequired="false" barHeight="0">
+					<jr:codeExpression><![CDATA[$F{customerinfo_customerid}]]></jr:codeExpression>
+				</jr:barbecue>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="144" pageHeight="110" columnWidth="144" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f0566747-7d47-4c33-8e82-f3020d1f284b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#CCCCCC"/>
+			<bottomPen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#FFFFFF"/>
+			<bottomPen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#FFFFFF"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="b763da95-0a07-477e-abef-aec6421f2b8b">
+		<parameter name="picture" class="java.awt.Image"/>
+		<field name="Item Name" class="java.lang.String"/>
+		<field name="Barcode" class="java.lang.String"/>
+		<field name="MRP" class="java.lang.String"/>
+		<field name="comment" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="ItemDatasource" class="net.sf.jasperreports.engine.data.JRTableModelDataSource"/>
+	<queryString>
+		<![CDATA[SELECT
+     reportdesign.`id` AS reportdesign_id,
+     reportdesign.`picture` AS reportdesign_picture
+FROM
+     `reportdesign` reportdesign]]>
+	</queryString>
+	<field name="reportdesign_id" class="java.lang.Integer"/>
+	<field name="reportdesign_picture" class="java.awt.Image"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="90" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table 2" style="table 2" x="22" y="3" width="100" height="73" isPrintInFirstWholeBand="true" uuid="1063f129-4529-4778-b7a3-63e888f461d8"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Table Dataset 1" uuid="a9cc5963-5f66-4c95-a8bf-921c6fa2aa05">
+						<datasetParameter name="picture">
+							<datasetParameterExpression><![CDATA[$F{reportdesign_picture}]]></datasetParameterExpression>
+						</datasetParameter>
+						<dataSourceExpression><![CDATA[$P{ItemDatasource}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="95" uuid="39ac4363-dd27-49e5-9b01-1b3948ecc3e4">
+						<jr:detailCell style="table 1_TD" height="80" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="16" width="95" height="12" uuid="86912692-058a-4ea1-b6e6-b639db64c0a0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Item Name}]]></textFieldExpression>
+							</textField>
+							<componentElement>
+								<reportElement x="0" y="28" width="95" height="35" uuid="880ec225-c7da-4458-81c9-de7d178ccd4d"/>
+								<jr:EAN13 textPosition="bottom" checksumMode="ignore">
+									<jr:codeExpression><![CDATA[$F{Barcode}]]></jr:codeExpression>
+								</jr:EAN13>
+							</componentElement>
+							<staticText>
+								<reportElement x="15" y="57" width="27" height="12" uuid="7e3ab495-8f32-4fd0-bbbd-3277173f5344"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Times New Roman" isBold="true"/>
+								</textElement>
+								<text><![CDATA[MRP:]]></text>
+							</staticText>
+							<textField>
+								<reportElement x="42" y="57" width="53" height="12" uuid="b936b647-42aa-4e47-aa1e-77bfde5c4f71"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Times New Roman"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{MRP}]]></textFieldExpression>
+							</textField>
+							<image>
+								<reportElement x="13" y="6" width="68" height="10" uuid="d21cbc58-4134-4b63-b446-20af8cd1812c"/>
+								<imageExpression><![CDATA["C:\\Hadiah\\src\\Report\\hadia-barcode.png"]]></imageExpression>
+							</image>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="12" uuid="01097093-e0e5-4ea4-a1a5-5d3affe61b2b">
+						<jr:detailCell height="80" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="12" height="79" uuid="c0df44f7-f637-4a10-ba9f-4331fe5c0ec5"/>
+								<textElement textAlignment="Center" verticalAlignment="Bottom" rotation="Right">
+									<font fontName="Times New Roman" size="7" isItalic="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{comment}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>
